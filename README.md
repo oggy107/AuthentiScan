@@ -1,6 +1,6 @@
-# <center>AuthentiScan</center>
+<h1 align="center">AuthentiScan</h1>
 
-#### <center>Fake product verification system<center>
+<h4 align="center">Fake product verification system</h4>
 
 ## Setup
 
