@@ -1,17 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.21;
 
-// interface AuthentiScanI {
-//     function registerManufacturer() external returns () {
-        
-//     }
-
-//     function verifyProduct(string id) external returns () {
-        
-//     }
-// }
-
 contract AuthentiScan {
+    // manufacturer properties
     struct Manufacturer {
         string name;
     }
@@ -20,11 +11,5 @@ contract AuthentiScan {
         
     }
 
-    // function registerManufacturer() external returns () {
-        
-    // }
-
-    // function verifyProduct(string id)  returns () {
-        
-    // }
+    // TODO: need a way to verify manufacturer onchain maybe using decentralized oracle network such as chainlink
 }
