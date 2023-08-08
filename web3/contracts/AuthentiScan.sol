@@ -9,11 +9,30 @@ import "./Utils.sol";
 
 contract AuthentiScan {
     mapping (address => Manufacturer) public manufacturers;
+    Verify verify;
 
-    constructor() {}
+    constructor() {
+        verify = new Verify(msg.sender, address(this));
+    }
 
-    function registerManufacturer(string memory _name) public {
-        require(manufacturers[msg.sender].id == address(0), "Manufacturer already registerd");
+    /**
+     * Checks if manufacturer is registered on the platform or not
+     * @param id if of the manufacturer
+     * @return bool true if manufacturer is registered else false
+     */
+    function exists(address id) internal view returns (bool) {
+        return manufacturers[id].id != address(0) ? true : false;
+    }
+
+    // TODO: impliment and emit events when manufacturer is added
+
+    /**
+     * @dev Register a new manufacturer
+     * @param _name Name of the manufacturer
+     */
+    function registerManufacturer(string memory _name) external  {
+        // require(manufacturers[msg.sender].id == address(0), "Manufacturer already registerd");
+        require(!exists(msg.sender), "Manufacturer already registerd");
 
         Manufacturer memory manufacturer;
 
@@ -23,7 +42,38 @@ contract AuthentiScan {
 
         manufacturers[msg.sender] = manufacturer;
 
-        // TODO: add manufacturer to unverified manufacturers mempool
-        // TODO: impliment and emit events when manufacturer is added
+        verify.addManufacturerToUnverifiedMempool(manufacturer);
     }
+
+    /**
+     * @dev Returns true if manufacturer is verified else false
+     * @param id id of the manufacturer to verify
+     * @return bool true if manufacturer is verified else false
+     */
+    function isVerified(address id) external view returns (bool) {
+        require(exists(id), "Manufacturer is not registered. Please register manufacturer first");
+
+        return manufacturers[id].isVerified;
+    }
+
+    /**
+     * @dev Verifies the manufacturer and marks it as legitimate. This method can only be called by Verify contract after the voting from trusted entities
+     * @param id id of the manufacturer to verify
+     */
+    function setVerificationTrue(address id) external {
+        require(msg.sender == getVerifyContractAddress(), "Verification can only be set by Verify contract");
+
+        manufacturers[id].isVerified = true;
+    }
+
+    /**
+     * @dev Returns address of Verify contract
+     * @return address address of Verify contract
+     */
+    function getVerifyContractAddress() public view returns (address) {
+        return address(verify);
+    }
+
+    // TODO: Roadmap goes here after the verification of manufacturer is done
+    // 1. Allow manufacturer to register prodcts
 }
