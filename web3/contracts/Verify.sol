@@ -26,7 +26,6 @@ contract Verify is Ownable {
         authentiScan = AuthentiScan(authentiScanAddress);
     }
 
-
     /**
      * @dev Add manufacturer to unverified mempool
      * @param manufacturer Manufacturer to add
