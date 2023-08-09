@@ -12,9 +12,7 @@ contract Verify is Ownable {
     address[] trustedEntities;
 
     // mempool for unverified manufacturers
-    mapping (address => Manufacturer) unverifiedManufacturers;
-    address[] unverifiedManufacturersKeys;
-    uint256 unverifiedManufacturersCount;
+    address[] unverifiedManufacturers;
 
     // number of votes (manufacturer id => array of trusted entities who voted)
     mapping (address => address[]) votes;
@@ -28,15 +26,13 @@ contract Verify is Ownable {
 
     /**
      * @dev Add manufacturer to unverified mempool
-     * @param manufacturer Manufacturer to add
+     * @param id id of manufacturer to add
      */
-    function addManufacturerToUnverifiedMempool(Manufacturer memory manufacturer) public {
-        require(!Array.exists(unverifiedManufacturersKeys, manufacturer.id), "This manufacturer has already been added to mempool");
+    function addManufacturerToUnverifiedMempool(address id) public {
+        require(!Array.exists(unverifiedManufacturers, id), "This manufacturer has already been added to mempool");
         require(msg.sender == address(authentiScan), "This method can only be called by AuthentiScan Contract");
 
-        unverifiedManufacturers[manufacturer.id] = manufacturer;
-        unverifiedManufacturersKeys.push(manufacturer.id);
-        unverifiedManufacturersCount++;
+        unverifiedManufacturers.push(id);
     }
 
     /**
@@ -44,27 +40,8 @@ contract Verify is Ownable {
      * @param id id of manufacturer to remove
      */
     function removeManufacturerFromMemPool(address id) internal {
-        require(Array.exists(unverifiedManufacturersKeys, id), "This manufacturer is not in unverfied mempool");
-        Manufacturer memory manufacturer = unverifiedManufacturers[id];
-
-        if (!manufacturer.isVerified) {
-            manufacturer.isVerified = true;
-        }
-
-        delete unverifiedManufacturers[manufacturer.id];
-        Array.remove(unverifiedManufacturersKeys, manufacturer.id);
-        unverifiedManufacturersCount--;
-    }
-
-    /**
-     * @dev Verifies manufacturer and removed it from unverified mempool
-     * @param id id of manufacturer to verify
-     */
-    function markAsVerify(address id) internal {
-        require(Array.exists(unverifiedManufacturersKeys, id), "This manufacturer is not in unverfied mempool");
-
-        authentiScan.setVerificationTrue(id);
-        removeManufacturerFromMemPool(id);
+        require(Array.exists(unverifiedManufacturers, id), "This manufacturer is not in unverfied mempool");
+        Array.remove(unverifiedManufacturers, id);
     }
 
     /**
@@ -76,7 +53,8 @@ contract Verify is Ownable {
         uint256 totalNumberOfVotes = votes[id].length;
 
         if (totalNumberOfVotes > numberOfTrustedEntites / 2) {
-            markAsVerify(id);
+            authentiScan.setVerificationTrue(id);
+            removeManufacturerFromMemPool(id);
         }
     }
 
@@ -85,7 +63,7 @@ contract Verify is Ownable {
      * @param id id of manufacturer to cast vote for
      */
     function vote(address id) external {
-        require(Array.exists(unverifiedManufacturersKeys, id), "This manufacturer is not in unverified pool. Hence you can not cast vote for it");
+        require(Array.exists(unverifiedManufacturers, id), "This manufacturer is not in unverified pool. Hence you can not cast vote for it");
         require(Array.exists(trustedEntities, msg.sender), "This entity is not trusted. Hence it can not cast a vote");
         require(!Array.exists(votes[id], msg.sender), "This entity has already casted a vote");
 
@@ -98,16 +76,8 @@ contract Verify is Ownable {
      * @return Manufacturer[] unverified manufacturers array
      */
     function getUnverifiedManufacturers() external view returns (Manufacturer[] memory) {
-        Manufacturer[] memory ret = new Manufacturer[](unverifiedManufacturersCount);
-
-        for (uint i = 0; i < unverifiedManufacturersCount; i++) {
-            ret[i] = unverifiedManufacturers[unverifiedManufacturersKeys[i]];
-        }
-
-        return ret;
+        return authentiScan.getUnverifiedManufacturers(unverifiedManufacturers);
     }
-
-    // TODO: suggestion: we can also use opeenzeppelins Access Control contracts to impliement this
 
     /**
      * Mark entity as trusted

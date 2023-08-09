@@ -42,7 +42,8 @@ contract AuthentiScan {
 
         manufacturers[msg.sender] = manufacturer;
 
-        verify.addManufacturerToUnverifiedMempool(manufacturer);
+        // verify.addManufacturerToUnverifiedMempool(manufacturer);
+        verify.addManufacturerToUnverifiedMempool(msg.sender);
     }
 
     /**
@@ -66,6 +67,18 @@ contract AuthentiScan {
         manufacturers[id].isVerified = true;
     }
 
+    function getUnverifiedManufacturers(address[] memory unverifiedManufacturers) public view returns (Manufacturer[] memory) {
+        require(msg.sender == getVerifyContractAddress(), "This method can only be called by Verify contract");
+
+        Manufacturer[] memory ret = new Manufacturer[](unverifiedManufacturers.length);
+
+        for (uint i = 0; i < unverifiedManufacturers.length; i++) {
+            ret[i] = manufacturers[unverifiedManufacturers[i]];
+        }
+
+        return ret;
+    }
+
     /**
      * @dev Returns address of Verify contract
      * @return address address of Verify contract
@@ -75,5 +88,5 @@ contract AuthentiScan {
     }
 
     // TODO: Roadmap goes here after the verification of manufacturer is done
-    // 1. Allow manufacturer to register prodcts
+    // 1. Allow manufacturer to register product
 }
