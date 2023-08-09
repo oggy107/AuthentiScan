@@ -11,6 +11,7 @@ const config: HardhatUserConfig = {
         },
         ganacheCli: {
             url: "http://127.0.0.1:8545",
+            chainId: 1337,
         },
     },
 };
