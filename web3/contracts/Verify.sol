@@ -26,7 +26,6 @@ contract Verify is Ownable {
         authentiScan = AuthentiScan(authentiScanAddress);
     }
 
-    // TODO: restrict the access to AuthentiScan contract
 
     /**
      * @dev Add manufacturer to unverified mempool
@@ -34,6 +33,7 @@ contract Verify is Ownable {
      */
     function addManufacturerToUnverifiedMempool(Manufacturer memory manufacturer) public {
         require(!Array.exists(unverifiedManufacturersKeys, manufacturer.id), "This manufacturer has already been added to mempool");
+        require(msg.sender == address(authentiScan), "This method can only be called by AuthentiScan Contract");
 
         unverifiedManufacturers[manufacturer.id] = manufacturer;
         unverifiedManufacturersKeys.push(manufacturer.id);
