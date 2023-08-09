@@ -5,8 +5,6 @@ import "./Types.sol";
 import "./Verify.sol";
 import "./Utils.sol";
 
-// TODO: add mappings utils
-
 contract AuthentiScan {
     mapping (address => Manufacturer) public manufacturers;
     Verify verify;
@@ -31,7 +29,6 @@ contract AuthentiScan {
      * @param _name Name of the manufacturer
      */
     function registerManufacturer(string memory _name) external  {
-        // require(manufacturers[msg.sender].id == address(0), "Manufacturer already registerd");
         require(!exists(msg.sender), "Manufacturer already registerd");
 
         Manufacturer memory manufacturer;
