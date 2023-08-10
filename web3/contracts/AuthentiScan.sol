@@ -60,8 +60,7 @@ contract AuthentiScan {
     function setVerificationTrue(address id) external {
         require(msg.sender == getVerifyContractAddress(), "Verification can only be set by Verify contract");
 
-        // manufacturers[id].isVerified = true;
-        manufacturers[id].isVerified = false;
+        manufacturers[id].isVerified = true;
     }
 
     function getUnverifiedManufacturers(address[] memory unverifiedManufacturers) public view returns (Manufacturer[] memory) {
