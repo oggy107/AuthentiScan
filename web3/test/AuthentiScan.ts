@@ -1,14 +1,50 @@
 import { ethers } from "hardhat";
 import chai from "chai";
 import { AuthentiScan, Verify } from "../typechain-types";
+import { ProductStruct } from "../typechain-types/contracts/AuthentiScan";
 
 describe("AuthentiScan", () => {
+    const MANUFACTURER_NAME = "Toei";
+
     const deploy = async () => {
         return await ethers.deployContract("AuthentiScan");
     };
 
     const deployVerify = async (authentiScanAddress: string) => {
         return await ethers.getContractAt("Verify", authentiScanAddress);
+    };
+
+    const cleanDeploy = async () => {
+        const authentiScan = await deploy();
+        const verify = await deployVerify(
+            await authentiScan.getVerifyContractAddress()
+        );
+
+        return {
+            authentiScan,
+            verify,
+        };
+    };
+
+    const registerManufacturer = async (
+        authentiScan: AuthentiScan,
+        manufacturerName: string = MANUFACTURER_NAME
+    ) => {
+        const tx = await authentiScan.registerManufacturer(manufacturerName);
+
+        await tx.wait();
+    };
+
+    const verifyManufacturer = async (
+        verify: Verify,
+        manufacturerId: string,
+        trustedEntity: string
+    ) => {
+        await verify.addTrustedEntity(trustedEntity);
+
+        await verify
+            .connect(await ethers.getSigner(trustedEntity))
+            .vote(manufacturerId);
     };
 
     describe("Deployment", () => {
@@ -70,28 +106,6 @@ describe("AuthentiScan", () => {
         let authentiScan: AuthentiScan;
         let verify: Verify;
         let accounts: Array<string> = [];
-
-        const MANUFACTURER_NAME = "Toei";
-
-        const cleanDeploy = async () => {
-            const authentiScan = await deploy();
-            const verify = await deployVerify(
-                await authentiScan.getVerifyContractAddress()
-            );
-
-            return {
-                authentiScan,
-                verify,
-            };
-        };
-
-        const registerManufacturer = async (authentiScan: AuthentiScan) => {
-            const tx = await authentiScan.registerManufacturer(
-                MANUFACTURER_NAME
-            );
-
-            await tx.wait();
-        };
 
         before(async () => {
             authentiScan = await deploy();
@@ -192,6 +206,52 @@ describe("AuthentiScan", () => {
 
             chai.expect(await authentiScan.isVerified(manufacturerId)).to.be
                 .true;
+        });
+    });
+
+    describe("Product registraction", () => {
+        let authentiScan: AuthentiScan;
+        let verify: Verify;
+        let accounts: Array<string> = [];
+
+        before(async () => {
+            (await ethers.getSigners()).forEach((signer) => {
+                accounts.push(signer.address);
+            });
+        });
+
+        beforeEach(async () => {
+            const deployedContracts = await cleanDeploy();
+            authentiScan = deployedContracts.authentiScan;
+            verify = deployedContracts.verify;
+        });
+
+        it("should allow only verified manufacturer to register a product", async () => {
+            const product: ProductStruct = {
+                id: "101",
+                name: "toy",
+            };
+
+            chai.expect(authentiScan.addProduct(product)).to.be.revertedWith(
+                "Manufacturer is not registered. Please register manufacturer first"
+            );
+
+            await registerManufacturer(authentiScan);
+
+            chai.expect(authentiScan.addProduct(product)).to.be.revertedWith(
+                "Only verified Manufacturers can call this method"
+            );
+
+            await verifyManufacturer(verify, accounts[0], accounts[1]);
+
+            const tx = await authentiScan.addProduct(product);
+
+            const receipt = await tx.wait();
+            chai.expect(receipt).to.not.be.null;
+
+            if (receipt) {
+                chai.expect(receipt.status).to.equal(1);
+            }
         });
     });
 });
