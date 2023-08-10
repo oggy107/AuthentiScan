@@ -16,6 +16,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: cd ./web3
-      - run: npm ci
-      - run: npx hardhat test
+      - name: install dependencies
+        working-directory: ./web3
+        run: npm ci
+      - name: running tests
+        working-directory: ./web3
+        run: npx hardhat test
