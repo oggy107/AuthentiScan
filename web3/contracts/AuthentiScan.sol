@@ -39,7 +39,6 @@ contract AuthentiScan {
 
         manufacturers[msg.sender] = manufacturer;
 
-        // verify.addManufacturerToUnverifiedMempool(manufacturer);
         verify.addManufacturerToUnverifiedMempool(msg.sender);
     }
 
