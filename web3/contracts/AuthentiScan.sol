@@ -85,4 +85,5 @@ contract AuthentiScan {
 
     // TODO: Roadmap goes here after the verification of manufacturer is done
     // 1. Allow manufacturer to register product
+    
 }
