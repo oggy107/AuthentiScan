@@ -5,6 +5,8 @@ import "./Types.sol";
 import "./Verify.sol";
 import "./Utils.sol";
 
+// TODO: impliment and emit events when manufacturer is added
+
 contract AuthentiScan {
     mapping (address => Manufacturer) public manufacturers;
     Verify verify;
@@ -21,8 +23,6 @@ contract AuthentiScan {
     function exists(address id) internal view returns (bool) {
         return manufacturers[id].id != address(0) ? true : false;
     }
-
-    // TODO: impliment and emit events when manufacturer is added
 
     /**
      * @dev Register a new manufacturer
