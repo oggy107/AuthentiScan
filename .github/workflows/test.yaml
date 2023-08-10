@@ -3,7 +3,7 @@ name: testing
 on:
   push:
     paths:
-      - '**/contracts'
+      - '**/*.sol'
   pull_request:
 
 jobs:
