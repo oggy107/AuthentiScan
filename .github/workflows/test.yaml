@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: testing
+    name: testing smart contracts
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - name: install dependencies
+      - name: installing dependencies
         working-directory: ./web3
         run: npm ci
       - name: running tests
