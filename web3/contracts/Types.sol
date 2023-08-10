@@ -6,3 +6,8 @@ struct Manufacturer {
     string name;
     bool isVerified;
 }
+
+struct Product {
+    string id;
+    string name;
+}

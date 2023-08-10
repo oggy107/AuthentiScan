@@ -8,8 +8,18 @@ import "./Utils.sol";
 // TODO: impliment and emit events when manufacturer is added
 
 contract AuthentiScan {
+    // manufacturer id => Manufacturer
     mapping (address => Manufacturer) public manufacturers;
     Verify verify;
+
+    // manufacturer id => array of Product
+    mapping (address => Product[]) products;
+
+    modifier onlyVerified {
+        require(isVerified(msg.sender), "Only verified Manufacturers can call this method");
+
+        _;
+    }
 
     constructor() {
         verify = new Verify(msg.sender, address(this));
@@ -47,7 +57,7 @@ contract AuthentiScan {
      * @param id id of the manufacturer to verify
      * @return bool true if manufacturer is verified else false
      */
-    function isVerified(address id) external view returns (bool) {
+    function isVerified(address id) public view returns (bool) {
         require(exists(id), "Manufacturer is not registered. Please register manufacturer first");
 
         return manufacturers[id].isVerified;
@@ -84,5 +94,14 @@ contract AuthentiScan {
     }
 
     // TODO: Roadmap goes here after the verification of manufacturer is done
-    // 1. Allow manufacturer to register product
+    // 1. Allow manufacturer to register product :DONE
+    // 2. Do not allow the products with same id to be added more than once
+
+    function addProduct(Product memory product) external onlyVerified {
+        products[msg.sender].push(product);
+    }
+
+    function getProducts() external view onlyVerified returns (Product[] memory) {
+        return products[msg.sender];
+    }
 }
