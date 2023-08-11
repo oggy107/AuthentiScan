@@ -53,6 +53,12 @@ library Array {
 }
 
 library String {
+    /**
+     * @dev Compare first string with second string
+     * @param str1 first string
+     * @param str2 second string
+     * @return bool true if strings match else false
+     */
     function equals(string memory str1, string memory str2) internal pure returns (bool) {
         if (keccak256(abi.encodePacked(str1)) == keccak256(abi.encodePacked(str2))) {
             return true;
@@ -65,6 +71,12 @@ library String {
 library ProductUtils {
     using String for string;
 
+    /**
+     * Returns true if string exists in array of strings, false otherwise
+     * @param array array of strings
+     * @param id string that has to be searched
+     * @return bool true if id exists in array, false otherwise
+     */
     function exists(string[] memory array, string memory id) internal pure returns (bool) {
         for (uint i = 0; i < array.length; i++) {
             if (array[i].equals(id)) {

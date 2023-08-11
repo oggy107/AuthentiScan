@@ -105,6 +105,10 @@ contract AuthentiScan {
     // #1: we make the manufacturer to include their manufacturer id on their website or on product itself and user need to enter manufacturer id as well as product id for verification
     // #2: idk??
 
+    /**
+     * @dev Register products
+     * @param _products array of Product to be registerd
+     */
     function registerProducts(Product[] memory _products) external onlyVerified {
         require(_products.length > 0, "products array must include at least one product");
 
@@ -116,6 +120,10 @@ contract AuthentiScan {
         }
     }
 
+    /**
+     * @dev Get products registred by the manufacturer
+     * @return Product[] array of registred products
+     */
     function getProducts() external view onlyVerified returns (Product[] memory) {
         return products[msg.sender];
     }
