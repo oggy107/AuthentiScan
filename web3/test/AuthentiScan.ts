@@ -227,31 +227,67 @@ describe("AuthentiScan", () => {
         });
 
         it("should allow only verified manufacturer to register a product", async () => {
-            const product: ProductStruct = {
+            const product_1: ProductStruct = {
                 id: "101",
                 name: "toy",
             };
 
-            chai.expect(authentiScan.addProduct(product)).to.be.revertedWith(
+            const product_2: ProductStruct = {
+                id: "102",
+                name: "sky walker",
+            };
+
+            chai.expect(
+                authentiScan.registerProduct(product_1)
+            ).to.be.revertedWith(
                 "Manufacturer is not registered. Please register manufacturer first"
             );
 
             await registerManufacturer(authentiScan);
 
-            chai.expect(authentiScan.addProduct(product)).to.be.revertedWith(
+            chai.expect(
+                authentiScan.registerProduct(product_1)
+            ).to.be.revertedWith(
                 "Only verified Manufacturers can call this method"
             );
 
             await verifyManufacturer(verify, accounts[0], accounts[1]);
 
-            const tx = await authentiScan.addProduct(product);
+            const tx_1 = await authentiScan.registerProduct(product_1);
 
-            const receipt = await tx.wait();
-            chai.expect(receipt).to.not.be.null;
+            const receipt_1 = await tx_1.wait();
+            chai.expect(receipt_1).to.not.be.null;
 
-            if (receipt) {
-                chai.expect(receipt.status).to.equal(1);
+            if (receipt_1) {
+                chai.expect(receipt_1.status).to.equal(1);
             }
+
+            const tx_2 = await authentiScan.registerProduct(product_2);
+
+            const receipt_2 = await tx_2.wait();
+            chai.expect(receipt_2).to.not.be.null;
+
+            if (receipt_2) {
+                chai.expect(receipt_2.status).to.equal(1);
+            }
+        });
+
+        it("should not allow duplicate product registration", async () => {
+            const product: ProductStruct = {
+                id: "101",
+                name: "toy",
+            };
+
+            await registerManufacturer(authentiScan);
+            await verifyManufacturer(verify, accounts[0], accounts[1]);
+
+            await authentiScan.registerProduct(product);
+
+            chai.expect(
+                authentiScan.registerProduct(product)
+            ).to.be.revertedWith(
+                "Can not register multiple products with same id"
+            );
         });
     });
 });
