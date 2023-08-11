@@ -1,7 +1,10 @@
 import { ethers } from "hardhat";
 import chai from "chai";
 import { AuthentiScan, Verify } from "../typechain-types";
-import { ProductStruct } from "../typechain-types/contracts/AuthentiScan";
+import {
+    ProductStruct,
+    ProductStructOutput,
+} from "../typechain-types/contracts/AuthentiScan";
 
 describe("AuthentiScan", () => {
     const MANUFACTURER_NAME = "Toei";
@@ -28,9 +31,11 @@ describe("AuthentiScan", () => {
 
     const registerManufacturer = async (
         authentiScan: AuthentiScan,
-        manufacturerName: string = MANUFACTURER_NAME
+        manufacturerId: string
     ) => {
-        const tx = await authentiScan.registerManufacturer(manufacturerName);
+        const tx = await authentiScan
+            .connect(await ethers.getSigner(manufacturerId))
+            .registerManufacturer(MANUFACTURER_NAME);
 
         await tx.wait();
     };
@@ -38,9 +43,10 @@ describe("AuthentiScan", () => {
     const verifyManufacturer = async (
         verify: Verify,
         manufacturerId: string,
-        trustedEntity: string
+        trustedEntity: string,
+        alreadyTrusted = false
     ) => {
-        await verify.addTrustedEntity(trustedEntity);
+        if (!alreadyTrusted) await verify.addTrustedEntity(trustedEntity);
 
         await verify
             .connect(await ethers.getSigner(trustedEntity))
@@ -148,7 +154,7 @@ describe("AuthentiScan", () => {
 
         it("should only allow trusted entities to vote and only once", async () => {
             const { authentiScan, verify } = await cleanDeploy();
-            await registerManufacturer(authentiScan);
+            await registerManufacturer(authentiScan, accounts[0]);
             const manufacturerId = accounts[0];
 
             await verify.addTrustedEntity(accounts[0]);
@@ -177,7 +183,7 @@ describe("AuthentiScan", () => {
 
         it("should automatically verify manufacturer when more than 51% trusted entites vote", async () => {
             const { authentiScan, verify } = await cleanDeploy();
-            await registerManufacturer(authentiScan);
+            await registerManufacturer(authentiScan, accounts[0]);
             const manufacturerId = accounts[0];
 
             await verify.addTrustedEntity(accounts[0]);
@@ -263,7 +269,7 @@ describe("AuthentiScan", () => {
                 "Manufacturer is not registered. Please register manufacturer first"
             );
 
-            await registerManufacturer(authentiScan);
+            await registerManufacturer(authentiScan, accounts[0]);
 
             chai.expect(
                 authentiScan.registerProducts(products_1)
@@ -323,7 +329,7 @@ describe("AuthentiScan", () => {
                 },
             ];
 
-            await registerManufacturer(authentiScan);
+            await registerManufacturer(authentiScan, accounts[0]);
             await verifyManufacturer(verify, accounts[0], accounts[1]);
 
             await authentiScan.registerProducts(products);
@@ -337,6 +343,87 @@ describe("AuthentiScan", () => {
             chai.expect(authentiScan.registerProducts([])).to.be.revertedWith(
                 "products array must include at least one product"
             );
+        });
+
+        it("should only allow verified manufacturers to fetch their own products", async () => {
+            const firstManufacturerProducts: Array<ProductStruct> = [
+                {
+                    id: "101",
+                    name: "toy",
+                },
+                {
+                    id: "102",
+                    name: "toy",
+                },
+            ];
+
+            const firstManufacturerOutput = [
+                ["101", "toy"],
+                ["102", "toy"],
+            ];
+
+            const secondManufacturerProducts: Array<ProductStruct> = [
+                {
+                    id: "abc",
+                    name: "book",
+                },
+                {
+                    id: "cde",
+                    name: "cup",
+                },
+                {
+                    id: "xyz",
+                    name: "pen",
+                },
+            ];
+
+            const secondManufacturerOutput = [
+                ["abc", "book"],
+                ["cde", "cup"],
+                ["xyz", "pen"],
+            ];
+
+            const firstManufacturerId = accounts[0];
+            const secondManufacturerId = accounts[3];
+
+            await registerManufacturer(authentiScan, firstManufacturerId);
+            await verifyManufacturer(verify, firstManufacturerId, accounts[1]);
+
+            await registerManufacturer(authentiScan, secondManufacturerId);
+            await verifyManufacturer(
+                verify,
+                secondManufacturerId,
+                accounts[1],
+                true
+            );
+
+            let registredProductsByFirstManufacturer = await authentiScan
+                .connect(await ethers.getSigner(firstManufacturerId))
+                .getProducts();
+
+            chai.expect(registredProductsByFirstManufacturer).to.be.empty;
+
+            await authentiScan
+                .connect(await ethers.getSigner(firstManufacturerId))
+                .registerProducts(firstManufacturerProducts);
+
+            registredProductsByFirstManufacturer = await authentiScan
+                .connect(await ethers.getSigner(firstManufacturerId))
+                .getProducts();
+
+            chai.expect(registredProductsByFirstManufacturer).to.deep.equal(
+                firstManufacturerOutput
+            );
+
+            await authentiScan
+                .connect(await ethers.getSigner(secondManufacturerId))
+                .registerProducts(secondManufacturerProducts);
+
+            chai.expect(
+                await authentiScan
+                    .connect(await ethers.getSigner(secondManufacturerId))
+                    .getProducts()
+            ).to.deep.equal(secondManufacturerOutput);
         });
     });
 });
