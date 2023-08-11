@@ -226,19 +226,39 @@ describe("AuthentiScan", () => {
             verify = deployedContracts.verify;
         });
 
-        it("should allow only verified manufacturer to register a product", async () => {
-            const product_1: ProductStruct = {
-                id: "101",
-                name: "toy",
-            };
+        it("should allow only verified manufacturer to register a products", async () => {
+            const products_1: Array<ProductStruct> = [
+                {
+                    id: "101",
+                    name: "toy",
+                },
+                {
+                    id: "102",
+                    name: "sky walker",
+                },
+                {
+                    id: "103",
+                    name: "fish",
+                },
+            ];
 
-            const product_2: ProductStruct = {
-                id: "102",
-                name: "sky walker",
-            };
+            const products_2: Array<ProductStruct> = [
+                {
+                    id: "104",
+                    name: "bird",
+                },
+                {
+                    id: "105",
+                    name: "sky walker",
+                },
+                {
+                    id: "106",
+                    name: "dolphin",
+                },
+            ];
 
             chai.expect(
-                authentiScan.registerProduct(product_1)
+                authentiScan.registerProducts(products_1)
             ).to.be.revertedWith(
                 "Manufacturer is not registered. Please register manufacturer first"
             );
@@ -246,14 +266,14 @@ describe("AuthentiScan", () => {
             await registerManufacturer(authentiScan);
 
             chai.expect(
-                authentiScan.registerProduct(product_1)
+                authentiScan.registerProducts(products_1)
             ).to.be.revertedWith(
                 "Only verified Manufacturers can call this method"
             );
 
             await verifyManufacturer(verify, accounts[0], accounts[1]);
 
-            const tx_1 = await authentiScan.registerProduct(product_1);
+            const tx_1 = await authentiScan.registerProducts(products_1);
 
             const receipt_1 = await tx_1.wait();
             chai.expect(receipt_1).to.not.be.null;
@@ -262,7 +282,7 @@ describe("AuthentiScan", () => {
                 chai.expect(receipt_1.status).to.equal(1);
             }
 
-            const tx_2 = await authentiScan.registerProduct(product_2);
+            const tx_2 = await authentiScan.registerProducts(products_2);
 
             const receipt_2 = await tx_2.wait();
             chai.expect(receipt_2).to.not.be.null;
@@ -272,21 +292,50 @@ describe("AuthentiScan", () => {
             }
         });
 
-        it("should not allow duplicate product registration", async () => {
-            const product: ProductStruct = {
-                id: "101",
-                name: "toy",
-            };
+        it("should not allow duplicate product and empty products array registration", async () => {
+            const products: Array<ProductStruct> = [
+                {
+                    id: "101",
+                    name: "toy",
+                },
+                {
+                    id: "102",
+                    name: "toy",
+                },
+                {
+                    id: "103",
+                    name: "toy",
+                },
+                {
+                    id: "104",
+                    name: "toy",
+                },
+            ];
+
+            const duplicateProducts: Array<ProductStruct> = [
+                {
+                    id: "104",
+                    name: "toy",
+                },
+                {
+                    id: "105",
+                    name: "toy",
+                },
+            ];
 
             await registerManufacturer(authentiScan);
             await verifyManufacturer(verify, accounts[0], accounts[1]);
 
-            await authentiScan.registerProduct(product);
+            await authentiScan.registerProducts(products);
 
             chai.expect(
-                authentiScan.registerProduct(product)
+                authentiScan.registerProducts(duplicateProducts)
             ).to.be.revertedWith(
                 "Can not register multiple products with same id"
+            );
+
+            chai.expect(authentiScan.registerProducts([])).to.be.revertedWith(
+                "products array must include at least one product"
             );
         });
     });
