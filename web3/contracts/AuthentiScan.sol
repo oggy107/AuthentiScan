@@ -105,12 +105,15 @@ contract AuthentiScan {
     // #1: we make the manufacturer to include their manufacturer id on their website or on product itself and user need to enter manufacturer id as well as product id for verification
     // #2: idk??
 
-    // TODO: maybe allow list of proudcts to be added not just single product;
-    function registerProduct(Product memory product) external onlyVerified {
-        require(!ProductUtils.exists(productIds[msg.sender], product.id), "Can not register multiple products with same id");
+    function registerProducts(Product[] memory _products) external onlyVerified {
+        require(_products.length > 0, "products array must include at least one product");
 
-        products[msg.sender].push(product);
-        productIds[msg.sender].push(product.id);
+        for (uint i = 0; i < _products.length; i++) {
+            require(!ProductUtils.exists(productIds[msg.sender], _products[i].id), "Can not register multiple products with same id");
+
+            products[msg.sender].push(_products[i]);
+            productIds[msg.sender].push(_products[i].id);
+        }
     }
 
     function getProducts() external view onlyVerified returns (Product[] memory) {
