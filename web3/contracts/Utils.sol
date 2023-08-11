@@ -51,3 +51,27 @@ library Array {
         array.pop();
     }
 }
+
+library String {
+    function equals(string memory str1, string memory str2) internal pure returns (bool) {
+        if (keccak256(abi.encodePacked(str1)) == keccak256(abi.encodePacked(str2))) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+library ProductUtils {
+    using String for string;
+
+    function exists(string[] memory array, string memory id) internal pure returns (bool) {
+        for (uint i = 0; i < array.length; i++) {
+            if (array[i].equals(id)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}

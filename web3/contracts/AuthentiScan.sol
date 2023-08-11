@@ -5,7 +5,7 @@ import "./Types.sol";
 import "./Verify.sol";
 import "./Utils.sol";
 
-// TODO: impliment and emit events when manufacturer is added
+// TODO: impliment and emit events
 
 contract AuthentiScan {
     // manufacturer id => Manufacturer
@@ -14,6 +14,8 @@ contract AuthentiScan {
 
     // manufacturer id => array of Product
     mapping (address => Product[]) products;
+    // manufacturer id => array of product ids
+    mapping (address => string[]) productIds;
 
     modifier onlyVerified {
         require(isVerified(msg.sender), "Only verified Manufacturers can call this method");
@@ -95,10 +97,20 @@ contract AuthentiScan {
 
     // TODO: Roadmap goes here after the verification of manufacturer is done
     // 1. Allow manufacturer to register product :DONE
-    // 2. Do not allow the products with same id to be added more than once
+    // 2. Do not allow the products with same id to be added more than once: DONE
 
-    function addProduct(Product memory product) external onlyVerified {
+    // ok so user will input product id to verify the product. But user has no concern with the manufacturer id
+    // but we need manufacturer id to search and verify the product, because each manufacturer stores their own products.
+    // proposed solutions:
+    // #1: we make the manufacturer to include their manufacturer id on their website or on product itself and user need to enter manufacturer id as well as product id for verification
+    // #2: idk??
+
+    // TODO: maybe allow list of proudcts to be added not just single product;
+    function registerProduct(Product memory product) external onlyVerified {
+        require(!ProductUtils.exists(productIds[msg.sender], product.id), "Can not register multiple products with same id");
+
         products[msg.sender].push(product);
+        productIds[msg.sender].push(product.id);
     }
 
     function getProducts() external view onlyVerified returns (Product[] memory) {
