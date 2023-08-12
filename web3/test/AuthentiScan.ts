@@ -425,5 +425,34 @@ describe("AuthentiScan", () => {
                     .getProducts()
             ).to.deep.equal(secondManufacturerOutput);
         });
+
+        it("should allow consumer to verify product", async () => {
+            const products: Array<ProductStruct> = [
+                {
+                    id: "101",
+                    name: "toy",
+                },
+                {
+                    id: "102",
+                    name: "sky walker",
+                },
+            ];
+
+            const manufacturerId = accounts[0];
+
+            await registerManufacturer(authentiScan, manufacturerId);
+            await verifyManufacturer(verify, manufacturerId, accounts[1]);
+            await authentiScan.registerProducts(products);
+
+            chai.expect(
+                authentiScan.verifyProduct(manufacturerId, "107")
+            ).to.be.revertedWith(
+                "Product is not register with by this manufacturer"
+            );
+
+            chai.expect(
+                await authentiScan.verifyProduct(manufacturerId, "102")
+            ).to.be.deep.equal(["102", "sky walker"]);
+        });
     });
 });
