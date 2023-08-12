@@ -8,6 +8,8 @@ import "./Utils.sol";
 // TODO: impliment and emit events
 
 contract AuthentiScan {
+    using String for string;
+
     // manufacturer id => Manufacturer
     mapping (address => Manufacturer) public manufacturers;
     Verify verify;
@@ -126,5 +128,27 @@ contract AuthentiScan {
      */
     function getProducts() external view onlyVerified returns (Product[] memory) {
         return products[msg.sender];
+    }
+
+    // TODO: write tests for the following
+
+    /**
+     * @dev Verify that the product is infact manufactured and registred by the manufacturer
+     * @param manufacturerId manufacturer id
+     * @param productId product id
+     * @return (bool, Product) true and verified product if product is indeed verified, else false and empty product object
+     */
+    function verifyProduct(address manufacturerId, string memory productId) external view returns (Product memory) {
+        require(exists(manufacturerId), "Manufacturer is not registered");
+
+        Product[] memory _products = products[manufacturerId];
+
+        for (uint i = 0; i < _products.length; i++) {
+            if (_products[i].id.equals(productId)) {
+                return _products[i];
+            }
+        }
+
+        revert("Product is not register with by this manufacturer");
     }
 }
