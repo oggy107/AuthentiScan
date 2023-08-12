@@ -4,7 +4,8 @@
     "description": "Fake product verification system",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "npx hardhat test",
+        "build": "npx hardhat compile"
     },
     "author": "",
     "license": "MIT",
