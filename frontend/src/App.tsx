@@ -1,7 +1,7 @@
-import "./App.css";
+import Web3Provider from "./Web3Config";
 
-function App() {
-    return <>hello there</>;
-}
+const App = () => {
+    return <Web3Provider>{/* Main app goes here */}</Web3Provider>;
+};
 
 export default App;
