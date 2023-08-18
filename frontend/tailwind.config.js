@@ -7,6 +7,10 @@ export default {
                 sky: "#001589",
                 rose: ", #F32786",
             },
+            fontFamily: {
+                roboto: ["Roboto", "sans-serif"],
+                poppins: ["Poppins", "sans-serif"],
+            },
         },
     },
     plugins: [],

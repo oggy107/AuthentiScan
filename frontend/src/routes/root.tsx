@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const Root: FC = (): JSX.Element => {
     return (
-        <div className="w-full h-screen min-h-[700px] flex flex-col">
+        <div className="w-full h-screen min-h-[700px] flex flex-col font-poppins">
             <Header />
             <Outlet />
             <Footer />
