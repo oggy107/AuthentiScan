@@ -1,5 +1,8 @@
 import { Web3Button, useWeb3ModalTheme } from "@web3modal/react";
 import { FC, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+import { Route } from "../types";
 
 const Header: FC = (): JSX.Element => {
     const { theme, setTheme } = useWeb3ModalTheme();
@@ -15,9 +18,20 @@ const Header: FC = (): JSX.Element => {
     }, [theme, setTheme]);
 
     return (
-        <div className="w-full h-[5rem] bg-gradient-to-r from-blue-700 from-40% to-red-400 flex justify-between items-center p-3">
+        <div className="w-full h-[70px] bg-gradient-to-r from-[#001589] to-[#F32786] flex justify-between items-center px-[60px] py-[15px]">
             <div className="text-2xl font-bold text-white">AuthentiScan</div>
-            <Web3Button />
+            <ul className="flex items-center gap-[30px]">
+                <li className="text-white text-sm font-normal capitalize">
+                    <Link to={Route.home}>Home</Link>
+                </li>
+                <li className="text-white text-sm font-normal capitalize">
+                    <Link to={Route.about}>About Us</Link>
+                </li>
+                <li className="text-white text-sm font-normal capitalize">
+                    <Link to={Route.how_it_works}>How it works</Link>
+                </li>
+                <Web3Button />
+            </ul>
         </div>
     );
 };
