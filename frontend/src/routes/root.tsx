@@ -1,12 +1,16 @@
+import { FC } from "react";
+
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 
-const Root = () => {
+const Root: FC = (): JSX.Element => {
     return (
-        <>
+        <div className="w-full h-screen min-h-[700px] flex flex-col">
             <Header />
             <Outlet />
-        </>
+            <Footer />
+        </div>
     );
 };
 
