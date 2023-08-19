@@ -34,6 +34,9 @@ const Header: FC = (): JSX.Element => {
                 <li className="text-white text-sm font-normal capitalize">
                     <Link to={Route.how_it_works}>How it works</Link>
                 </li>
+                <li className="text-white text-sm font-normal capitalize">
+                    <Link to={Route.register}>Register</Link>
+                </li>
                 <Web3Button />
             </ul>
         </div>
