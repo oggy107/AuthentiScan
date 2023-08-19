@@ -2,14 +2,15 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { Route } from "../types";
+import logoFull from "../assets/logoFull.png";
 
 const Footer: FC = (): JSX.Element => {
     return (
         <div className="w-full h-[185px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
             <div className="w-full flex flex-col pl-[115px] pr-[116.47px] pt-16 justify-end items-center gap-[41.90px]">
                 <div className="w-full flex justify-between">
-                    <div className="text-2xl font-bold text-white">
-                        AuthentiScan
+                    <div>
+                        <img src={logoFull} alt="logo" />
                     </div>
                     <ul className="flex items-center gap-[30px]">
                         <li className="text-white text-sm font-normal capitalize">
