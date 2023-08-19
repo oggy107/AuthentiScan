@@ -1,7 +1,11 @@
 import { FC } from "react";
 
-const home: FC = (): JSX.Element => {
-    return <div className="flex flex-grow">Home</div>;
+const Home: FC = (): JSX.Element => {
+    return (
+        <div className="flex flex-grow">
+            <div className="w-full h-ful">Home</div>
+        </div>
+    );
 };
 
-export default home;
+export default Home;
