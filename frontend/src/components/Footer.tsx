@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import { Route } from "../types";
 import logoFull from "../assets/logoFull.png";
 
+import tw from "../assets/icons/1.svg";
+import fb from "../assets/icons/2.svg";
+import insta from "../assets/icons/3.svg";
+import gh from "../assets/icons/4.svg";
+
 const Footer: FC = (): JSX.Element => {
     return (
         <div className="w-full h-[185px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
@@ -24,9 +29,34 @@ const Footer: FC = (): JSX.Element => {
                         </li>
                     </ul>
                     <ul className="flex items-center gap-[30px]">
-                        <li>fb</li>
-                        <li>in</li>
-                        <li>gh</li>
+                        <li>
+                            <img
+                                className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
+                                src={tw}
+                                alt="twitter"
+                            />
+                        </li>
+                        <li>
+                            <img
+                                className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
+                                src={fb}
+                                alt="facebook"
+                            />
+                        </li>
+                        <li>
+                            <img
+                                className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
+                                src={insta}
+                                alt="insta"
+                            />
+                        </li>
+                        <li>
+                            <img
+                                className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
+                                src={gh}
+                                alt="github"
+                            />
+                        </li>
                     </ul>
                 </div>
                 <div className="flex flex-col">
