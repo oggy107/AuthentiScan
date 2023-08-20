@@ -11,8 +11,8 @@ import gh from "../assets/icons/4.svg";
 
 const Footer: FC = (): JSX.Element => {
     return (
-        <div className="w-full h-[185px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
-            <div className="w-full flex flex-col pl-[115px] pr-[116.47px] pt-16 justify-end items-center gap-[41.90px]">
+        <div className="w-full h-[155px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
+            <div className="w-full h-full flex flex-col pl-[115px] pr-[116.47px] pt-9 justify-center items-center gap-[30px]">
                 <div className="w-full flex justify-between">
                     <div>
                         <img src={logoFull} alt="logo" />
