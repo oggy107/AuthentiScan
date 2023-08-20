@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 // import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
-import RegistractionProgress from "../components/RegistractionProgress";
+import RegistrationProgress from "../components/RegistrationProgress";
 import RegistrationForm from "../components/RegistrationForm";
 
 const Register: FC = (): JSX.Element => {
@@ -18,7 +18,7 @@ const Register: FC = (): JSX.Element => {
             <div className="w-full h-full grid grid-cols-4">
                 {/* UI goes here */}
                 <div className="w-full shadow-2xl">
-                    <RegistractionProgress />
+                    <RegistrationProgress />
                 </div>
                 <div className="w-ful col-span-3">
                     <RegistrationForm />
