@@ -17,10 +17,10 @@ const Register: FC = (): JSX.Element => {
         <div className="flex flex-grow">
             <div className="w-full h-full grid grid-cols-4">
                 {/* UI goes here */}
-                <div className="w-full shadow-2xl">
+                <div className="min-w-[360px] shadow-2xl">
                     <RegistrationProgress />
                 </div>
-                <div className="w-ful col-span-3">
+                <div className="col-span-3">
                     <RegistrationForm />
                 </div>
                 {/* following is just for testing */}
