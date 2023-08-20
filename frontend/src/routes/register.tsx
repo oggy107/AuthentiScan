@@ -1,22 +1,30 @@
 import { FC } from "react";
 
-import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
+// import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
+import RegistractionProgress from "../components/RegistractionProgress";
+import RegistrationForm from "../components/RegistrationForm";
 
 const Register: FC = (): JSX.Element => {
-    const { register, isEnabled, isLoading, isSuccess, isError, error } =
-        useRegisterManufacturer();
+    // const { register, isEnabled, isLoading, isSuccess, isError, error } =
+    //     useRegisterManufacturer();
 
     // hanlde manufacturer registration
-    const handleSubmit = () => {
-        register("my new manufacturer");
-    };
+    // const handleSubmit = () => {
+    //     register("my new manufacturer");
+    // };
 
     return (
         <div className="flex flex-grow">
-            <div className="w-full h-full p-3">
+            <div className="w-full h-full grid grid-cols-4">
                 {/* UI goes here */}
+                <div className="w-full shadow-2xl">
+                    <RegistractionProgress />
+                </div>
+                <div className="w-ful col-span-3">
+                    <RegistrationForm />
+                </div>
                 {/* following is just for testing */}
-                <button
+                {/* <button
                     className="bg-red-600 p-3 mt-2 rounded-xl text-white font-bold absolute left-[50%] translate-x-[-50%]"
                     disabled={!isEnabled}
                     onClick={handleSubmit}
@@ -26,7 +34,7 @@ const Register: FC = (): JSX.Element => {
                 {isLoading && <div>Check Wallet</div>}
                 {isSuccess && <div>cool</div>}
                 {isError && <div>{error?.name}</div>}
-                {isError && <div>{error?.message}</div>}
+                {isError && <div>{error?.message}</div>} */}
             </div>
         </div>
     );
