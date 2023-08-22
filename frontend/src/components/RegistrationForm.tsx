@@ -1,4 +1,6 @@
-import { FC, HTMLInputTypeAttribute, HTMLProps } from "react";
+import { FC, HTMLInputTypeAttribute, HTMLProps, FormEvent } from "react";
+
+import Button from "./Button";
 
 interface InputProps {
     lable: string;
@@ -28,8 +30,17 @@ Input.defaultProps = {
 };
 
 const RegistrationForm: FC = () => {
+    // const companyNameRef = useRef<HTMLInputElement>(null);
+
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+
+        // get inputs from form
+        // const companyName = companyNameRef.current?.value;
+    };
+
     return (
-        <form className="p-5 mt-[75px] mx-[90px]">
+        <form onSubmit={handleSubmit} className="p-5 mt-[20px] mx-[90px]">
             <div className="text-gray-950 text-4xl font-bold mb-2">
                 Fill In The Details
             </div>
@@ -76,6 +87,7 @@ const RegistrationForm: FC = () => {
                     required
                 />
             </div>
+            <Button className="mt-[20px]" title="Register" type="submit" />
         </form>
     );
 };
