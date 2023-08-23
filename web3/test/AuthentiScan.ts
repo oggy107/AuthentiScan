@@ -9,6 +9,17 @@ import {
 describe("AuthentiScan", () => {
     const MANUFACTURER_NAME = "Toei";
 
+    const manufacturer = {
+        name: "Toei",
+        registrationNo: "101",
+        logo: "https://dog.com/dog.png",
+        address: "India punjab",
+        email: "toei111@gmail.com",
+        registrarName: "ABC",
+        registrarId: "ABC_101",
+        taxId: "toei_107101",
+    };
+
     const deploy = async () => {
         return await ethers.deployContract("AuthentiScan");
     };
@@ -35,7 +46,16 @@ describe("AuthentiScan", () => {
     ) => {
         const tx = await authentiScan
             .connect(await ethers.getSigner(manufacturerId))
-            .registerManufacturer(MANUFACTURER_NAME);
+            .registerManufacturer(
+                manufacturer.name,
+                manufacturer.registrationNo,
+                manufacturer.logo,
+                manufacturer.address,
+                manufacturer.email,
+                manufacturer.registrarName,
+                manufacturer.registrarId,
+                manufacturer.taxId
+            );
 
         await tx.wait();
     };
@@ -84,7 +104,14 @@ describe("AuthentiScan", () => {
 
         it("should register a new manufacturer", async () => {
             const tx = await authentiScan.registerManufacturer(
-                MANUFACTURER_NAME
+                manufacturer.name,
+                manufacturer.registrationNo,
+                manufacturer.logo,
+                manufacturer.address,
+                manufacturer.email,
+                manufacturer.registrarName,
+                manufacturer.registrarId,
+                manufacturer.taxId
             );
             const receipt = await tx.wait();
             chai.expect(receipt).to.not.be.null;
@@ -96,14 +123,29 @@ describe("AuthentiScan", () => {
 
         it("should add manufacturer to unverified mempool", async () => {
             const manufacturers = await verify.getUnverifiedManufacturers();
-
             chai.expect(manufacturers.length).to.equal(1);
-            chai.expect(manufacturers[0][1]).to.equal(MANUFACTURER_NAME);
+            chai.expect(manufacturers[0][1]).to.equal(false);
+            chai.expect(manufacturers[0][2]).to.equal("Toei");
+            chai.expect(manufacturers[0][4]).to.equal(
+                "https://dog.com/dog.png"
+            );
+            chai.expect(manufacturers[0][6]).to.equal("toei111@gmail.com");
+            chai.expect(manufacturers[0][7]).to.equal("ABC");
+            chai.expect(manufacturers[0][9]).to.equal("toei_107101");
         });
 
         it("should revert when trying to add same manufacturer twice", () => {
             chai.expect(
-                authentiScan.registerManufacturer(MANUFACTURER_NAME)
+                authentiScan.registerManufacturer(
+                    manufacturer.name,
+                    manufacturer.registrationNo,
+                    manufacturer.logo,
+                    manufacturer.address,
+                    manufacturer.email,
+                    manufacturer.registrarName,
+                    manufacturer.registrarId,
+                    manufacturer.taxId
+                )
             ).to.be.revertedWith("manufacturer already exists");
         });
     });
@@ -125,7 +167,14 @@ describe("AuthentiScan", () => {
             });
 
             const tx = await authentiScan.registerManufacturer(
-                MANUFACTURER_NAME
+                manufacturer.name,
+                manufacturer.registrationNo,
+                manufacturer.logo,
+                manufacturer.address,
+                manufacturer.email,
+                manufacturer.registrarName,
+                manufacturer.registrarId,
+                manufacturer.taxId
             );
 
             await tx.wait();
