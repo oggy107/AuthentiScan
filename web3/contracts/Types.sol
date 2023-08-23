@@ -3,8 +3,15 @@ pragma solidity ^0.8.21;
 
 struct Manufacturer {
     address id;
-    string name;
     bool isVerified;
+    string name;
+    string registrationNo;
+    string logo;
+    string companyAddress;
+    string email;
+    string registrarName;
+    string registrarId;
+    string taxId;
 }
 
 struct Product {

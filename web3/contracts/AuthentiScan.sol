@@ -42,13 +42,20 @@ contract AuthentiScan {
      * @dev Register a new manufacturer
      * @param _name Name of the manufacturer
      */
-    function registerManufacturer(string memory _name) external  {
+    function registerManufacturer(string memory _name, string memory _registrationNo, string memory _logo, string memory _address, string memory _email, string memory _registrarName, string memory _registrarId, string memory _taxId ) external  {
         require(!exists(msg.sender), "Manufacturer already registerd");
 
         Manufacturer memory manufacturer;
 
         manufacturer.id = msg.sender;
         manufacturer.name = _name;
+        manufacturer.registrationNo = _registrationNo;
+        manufacturer.logo = _logo;
+        manufacturer.companyAddress = _address;
+        manufacturer.email = _email;
+        manufacturer.registrarName = _registrarName;
+        manufacturer.registrarId = _registrarId;
+        manufacturer.taxId = _taxId;
         manufacturer.isVerified = false;
 
         manufacturers[msg.sender] = manufacturer;
