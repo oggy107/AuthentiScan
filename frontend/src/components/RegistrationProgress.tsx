@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import companyIcon from "../assets/icons/mdi_company.png";
-import rocketLogo from "../assets/icons/rocketpng.png";
-import tickLogo from "../assets/icons/subway_tick.png";
+import companyIcon from "../assets/icons/mdi_company.svg";
+import rocketLogo from "../assets/icons/rocket.svg";
+import tickLogo from "../assets/icons/subway_tick.svg";
 
 interface ProgressProps {
     stage: "details" | "welcome";
