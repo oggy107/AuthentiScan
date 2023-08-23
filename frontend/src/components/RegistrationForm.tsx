@@ -56,12 +56,12 @@ const RegistrationForm: FC = () => {
     const [registrationNo, setRegistrationNo] = useState<string>("");
     const [logo, setLogo] = useState<string>("");
     const [address, setAddress] = useState<string>("");
-    const [website, setWebsite] = useState<string>("");
+    // const [website, setWebsite] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [registrar, setRegistrar] = useState<string>("");
     const [registrarId, setRegistrarId] = useState<string>("");
     const [taxId, setTaxId] = useState<string>("");
-    const [bankNo, setBankNo] = useState<string>("");
+    // const [bankNo, setBankNo] = useState<string>("");
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -70,12 +70,12 @@ const RegistrationForm: FC = () => {
         console.log(registrationNo);
         console.log(logo);
         console.log(address);
-        console.log(website);
+        // console.log(website);
         console.log(email);
         console.log(registrar);
         console.log(registrarId);
         console.log(taxId);
-        console.log(bankNo);
+        // console.log(bankNo);
     };
 
     const handleChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -95,9 +95,9 @@ const RegistrationForm: FC = () => {
             case "address":
                 setAddress(value);
                 break;
-            case "website":
-                setWebsite(value);
-                break;
+            // case "website":
+            //     setWebsite(value);
+            //     break;
             case "email":
                 setEmail(value);
                 break;
@@ -110,9 +110,9 @@ const RegistrationForm: FC = () => {
             case "taxId":
                 setTaxId(value);
                 break;
-            case "bankNo":
-                setBankNo(value);
-                break;
+            // case "bankNo":
+            //     setBankNo(value);
+            //     break;
             default:
                 break;
         }
@@ -159,13 +159,13 @@ const RegistrationForm: FC = () => {
                 />
             </div>
             <div className="w-full flex gap-5 mt-[20px]">
-                <Input
+                {/* <Input
                     lable="Website"
                     name="website"
                     value={website}
                     onChange={handleChanges}
                     required
-                />
+                /> */}
                 <Input
                     lable="Official Email"
                     name="email"
@@ -200,7 +200,7 @@ const RegistrationForm: FC = () => {
                     required
                 />
             </div>
-            <div className="mt-[20px]">
+            {/* <div className="mt-[20px]">
                 <Input
                     className="w-[49%]"
                     lable="Bank number (for identification purposes)"
@@ -209,8 +209,8 @@ const RegistrationForm: FC = () => {
                     onChange={handleChanges}
                     required
                 />
-            </div>
-            <Button className="mt-[20px]" title="Register" type="submit" />
+            </div> */}
+            <Button className="mt-[50px]" title="Register" type="submit" />
         </form>
     );
 };
