@@ -9,7 +9,7 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = ({ title, className, type }) => {
     return (
         <button
-            className={`w-fit px-[59.5px] py-[12px] hover:cursor-pointer rounded-[7px] text-white bg-[#001589] ${className}`}
+            className={`w-fit px-[59.5px] py-[12px] hover:cursor-pointer hover:shadow-button rounded-[7px] text-white bg-[#001589] ${className}`}
             type={type}
         >
             {title}

@@ -11,6 +11,9 @@ export default {
                 roboto: ["Roboto", "sans-serif"],
                 poppins: ["Poppins", "sans-serif"],
             },
+            boxShadow: {
+                button: "0px 0px 4px 0px #0F31F2",
+            },
         },
     },
     plugins: [],
