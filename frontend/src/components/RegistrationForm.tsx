@@ -7,6 +7,9 @@ import {
     ChangeEvent,
 } from "react";
 
+// Libarary suggestion
+// npm install react-hook-form
+
 import Button from "./Button";
 
 interface InputProps {
