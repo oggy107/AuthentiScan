@@ -72,10 +72,27 @@ const RegistrationForm: FC = () => {
 
     const { isConnected } = useAccount();
 
+    const verifyLogo = (logo: string) => {
+        try {
+            const t = new URL(logo);
+            console.log(t);
+        } catch (error) {
+            return false;
+        }
+
+        return true;
+    };
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        console.log(isConnected);
+        // TODO: same here
+        // console.log(isConnected);
+
+        if (!verifyLogo(logo)) {
+            // TODO: inform to user with toast
+            return;
+        }
 
         register(
             companyName,
@@ -193,6 +210,7 @@ const RegistrationForm: FC = () => {
                     name="email"
                     value={email}
                     onChange={handleChanges}
+                    type="email"
                     required
                 />
             </div>
