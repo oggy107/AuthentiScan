@@ -3,12 +3,12 @@ import { FC } from "react";
 import companyIcon from "../assets/icons/mdi_company.svg";
 import rocketLogo from "../assets/icons/rocket.svg";
 import tickLogo from "../assets/icons/subway_tick.svg";
+import { useStage } from "../context/StageContext";
 
-interface ProgressProps {
-    stage: "details" | "welcome";
-}
+const Progress: FC = () => {
+    const stageContext = useStage();
+    const { stage } = stageContext!;
 
-const Progress: FC<ProgressProps> = (props) => {
     return (
         <div className="w-full h-[75px] relative">
             <div className="w-full h-[0px] top-[26px] absolute border border-blue-900"></div>
@@ -16,7 +16,7 @@ const Progress: FC<ProgressProps> = (props) => {
                 <div className="w-[58px] h-[75px] relative">
                     <div className="w-12 h-12 left-[8px] top-0 absolute">
                         <div className="w-12 h-12 left-0 top-0 absolute bg-white rounded-full shadow flex justify-center">
-                            {props.stage == "details" ? (
+                            {stage == "details" ? (
                                 <img
                                     className="w-[60%] object-contain"
                                     src={companyIcon}
@@ -30,11 +30,10 @@ const Progress: FC<ProgressProps> = (props) => {
                                 />
                             )}
                         </div>
-                        {/* <div className="w-[30px] h-[30px] left-[9px] top-[9px] absolute"></div> */}
                     </div>
                     <div
                         className={`left-0 top-[44px] absolute text-xs font-normal leading-[30.60px] ${
-                            props.stage != "details" && "text-stone-400"
+                            stage != "details" && "text-stone-400"
                         }`}
                     >
                         Fill Details
@@ -45,17 +44,16 @@ const Progress: FC<ProgressProps> = (props) => {
                         <div className="w-12 h-12 left-0 top-0 absolute bg-white rounded-full shadow flex justify-center">
                             <img
                                 className={`w-[60%] object-contain ${
-                                    props.stage != "welcome" && "opacity-60"
+                                    stage != "welcome" && "opacity-60"
                                 }`}
                                 src={rocketLogo}
                                 alt="rocket"
                             />
                         </div>
-                        {/* <div className="w-[30px] h-[30px] left-[9px] top-[9px] absolute"></div> */}
                     </div>
                     <div
                         className={`left-0 top-[44px] absolute text-xs font-normal leading-[30.60px] ${
-                            props.stage != "welcome" && "text-stone-400"
+                            stage != "welcome" && "text-stone-400"
                         }`}
                     >
                         Welcome
@@ -92,10 +90,10 @@ const Details: FC = () => {
     );
 };
 
-const RegistractionProgress = () => {
+const RegistractionProgress: FC = () => {
     return (
         <div className="mt-[90px] mx-[58px]">
-            <Progress stage="details" />
+            <Progress />
             <Details />
         </div>
     );

@@ -6,6 +6,7 @@ import Input from "./Input";
 import Button from "./Button";
 import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
 import { RegistrationVMExceptions } from "../errors";
+import { useStage } from "../context/StageContext";
 
 const RegistrationForm: FC = () => {
     const [companyName, setCompanyName] = useState<string>("");
@@ -21,6 +22,9 @@ const RegistrationForm: FC = () => {
 
     const { register, isEnabled, isLoading, isSuccess, isError, error } =
         useRegisterManufacturer();
+
+    const stageContext = useStage();
+    const { setStage } = stageContext!;
 
     const { isConnected } = useAccount();
 
@@ -46,6 +50,7 @@ const RegistrationForm: FC = () => {
         if (isSuccess) {
             toast.dismiss();
             toast.success("Registered Successfully");
+            setStage("welcome");
         }
 
         if (isError) {

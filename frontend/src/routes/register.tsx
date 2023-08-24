@@ -1,17 +1,18 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 // import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
 import RegistrationProgress from "../components/RegistrationProgress";
 import RegistrationForm from "../components/RegistrationForm";
+import RegistrationWelcome from "../components/RegistrationWelcome";
+import { StageContextProvider, useStage } from "../context/StageContext";
 
-const Register: FC = (): JSX.Element => {
-    // const { register, isEnabled, isLoading, isSuccess, isError, error } =
-    //     useRegisterManufacturer();
+const RegisterStageContextWrapper: FC = () => {
+    const stageContext = useStage();
+    const { stage, setStage } = stageContext!;
 
-    // hanlde manufacturer registration
-    // const handleSubmit = () => {
-    //     register("my new manufacturer");
-    // };
+    useEffect(() => {
+        setStage("welcome");
+    });
 
     return (
         <div className="flex flex-grow">
@@ -20,22 +21,22 @@ const Register: FC = (): JSX.Element => {
                     <RegistrationProgress />
                 </div>
                 <div className="col-span-3">
-                    <RegistrationForm />
+                    {stage == "details" ? (
+                        <RegistrationForm />
+                    ) : (
+                        <RegistrationWelcome />
+                    )}
                 </div>
-                {/* following is just for testing */}
-                {/* <button
-                    className="bg-red-600 p-3 mt-2 rounded-xl text-white font-bold absolute left-[50%] translate-x-[-50%]"
-                    disabled={!isEnabled}
-                    onClick={handleSubmit}
-                >
-                    test register button
-                </button>
-                {isLoading && <div>Check Wallet</div>}
-                {isSuccess && <div>cool</div>}
-                {isError && <div>{error?.name}</div>}
-                {isError && <div>{error?.message}</div>} */}
             </div>
         </div>
+    );
+};
+
+const Register: FC = (): JSX.Element => {
+    return (
+        <StageContextProvider>
+            <RegisterStageContextWrapper />
+        </StageContextProvider>
     );
 };
 
