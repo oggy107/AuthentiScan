@@ -2,7 +2,7 @@
 
 const config = {
     authentiscanContract: {
-        address: "e78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab",
+        address: "5b1869D9A4C187F2EAa108f3062412ecf0526b24",
         abi: [
             {
                 inputs: [],
@@ -52,14 +52,49 @@ const config = {
                                 type: "address",
                             },
                             {
+                                internalType: "bool",
+                                name: "isVerified",
+                                type: "bool",
+                            },
+                            {
                                 internalType: "string",
                                 name: "name",
                                 type: "string",
                             },
                             {
-                                internalType: "bool",
-                                name: "isVerified",
-                                type: "bool",
+                                internalType: "string",
+                                name: "registrationNo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "logo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "companyAddress",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "email",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarName",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "taxId",
+                                type: "string",
                             },
                         ],
                         internalType: "struct Manufacturer[]",
@@ -118,14 +153,49 @@ const config = {
                         type: "address",
                     },
                     {
+                        internalType: "bool",
+                        name: "isVerified",
+                        type: "bool",
+                    },
+                    {
                         internalType: "string",
                         name: "name",
                         type: "string",
                     },
                     {
-                        internalType: "bool",
-                        name: "isVerified",
-                        type: "bool",
+                        internalType: "string",
+                        name: "registrationNo",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "logo",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "companyAddress",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "email",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "registrarName",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "registrarId",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "taxId",
+                        type: "string",
                     },
                 ],
                 stateMutability: "view",
@@ -136,6 +206,41 @@ const config = {
                     {
                         internalType: "string",
                         name: "_name",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_registrationNo",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_logo",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_address",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_email",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_registrarName",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_registrarId",
+                        type: "string",
+                    },
+                    {
+                        internalType: "string",
+                        name: "_taxId",
                         type: "string",
                     },
                 ],
@@ -222,7 +327,7 @@ const config = {
     },
 
     verifyContract: {
-        address: "cC5f0a600fD9dC5Dd8964581607E5CC0d22C5A78",
+        address: "3c63250aFA2470359482d98749f2d60D2971c818",
         abi: [
             {
                 inputs: [
@@ -297,14 +402,49 @@ const config = {
                                 type: "address",
                             },
                             {
+                                internalType: "bool",
+                                name: "isVerified",
+                                type: "bool",
+                            },
+                            {
                                 internalType: "string",
                                 name: "name",
                                 type: "string",
                             },
                             {
-                                internalType: "bool",
-                                name: "isVerified",
-                                type: "bool",
+                                internalType: "string",
+                                name: "registrationNo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "logo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "companyAddress",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "email",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarName",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "taxId",
+                                type: "string",
                             },
                         ],
                         internalType: "struct Manufacturer[]",

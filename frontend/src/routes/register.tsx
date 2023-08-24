@@ -16,7 +16,6 @@ const Register: FC = (): JSX.Element => {
     return (
         <div className="flex flex-grow">
             <div className="w-full h-full grid grid-cols-4">
-                {/* UI goes here */}
                 <div className="min-w-[360px] shadow-2xl">
                     <RegistrationProgress />
                 </div>

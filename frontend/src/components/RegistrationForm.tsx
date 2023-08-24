@@ -10,7 +10,11 @@ import {
 // Libarary suggestion
 // npm install react-hook-form
 
+import { useAccount } from "wagmi";
+
 import Button from "./Button";
+
+import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
 
 interface InputProps {
     lable: string;
@@ -61,21 +65,39 @@ const RegistrationForm: FC = () => {
     const [registrar, setRegistrar] = useState<string>("");
     const [registrarId, setRegistrarId] = useState<string>("");
     const [taxId, setTaxId] = useState<string>("");
-    // const [bankNo, setBankNo] = useState<string>("");
+    // const [bankNo, setBankNo] = useState<string>("")
+
+    const { register, isEnabled, isLoading, isSuccess, isError, error } =
+        useRegisterManufacturer();
+
+    const { isConnected } = useAccount();
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        console.log(companyName);
-        console.log(registrationNo);
-        console.log(logo);
-        console.log(address);
-        // console.log(website);
-        console.log(email);
-        console.log(registrar);
-        console.log(registrarId);
-        console.log(taxId);
-        // console.log(bankNo);
+        console.log(isConnected);
+
+        register(
+            companyName,
+            registrationNo,
+            logo,
+            address,
+            email,
+            registrar,
+            registrarId,
+            taxId
+        );
+
+        // TODO: handle errors and success with toasts
+
+        // console.log(companyName);
+        // console.log(registrationNo);
+        // console.log(logo);
+        // console.log(address);
+        // console.log(email);
+        // console.log(registrar);
+        // console.log(registrarId);
+        // console.log(taxId);
     };
 
     const handleChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -210,7 +232,12 @@ const RegistrationForm: FC = () => {
                     required
                 />
             </div> */}
-            <Button className="mt-[50px]" title="Register" type="submit" />
+            <Button
+                className="mt-[50px]"
+                title="Register"
+                type="submit"
+                disabled={isLoading || !isEnabled}
+            />
         </form>
     );
 };
