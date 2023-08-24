@@ -1,14 +1,9 @@
-import { FC, FormEvent, useState, ChangeEvent } from "react";
-
-// Libarary suggestion
-// npm install react-hook-form
+import { FC, FormEvent, useState, ChangeEvent, useEffect } from "react";
+import { useAccount } from "wagmi";
+import { toast } from "react-toastify";
 
 import Input from "./Input";
-
-import { useAccount } from "wagmi";
-
 import Button from "./Button";
-
 import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
 
 const RegistrationForm: FC = () => {
@@ -30,8 +25,7 @@ const RegistrationForm: FC = () => {
 
     const verifyLogo = (logo: string) => {
         try {
-            const t = new URL(logo);
-            console.log(t);
+            new URL(logo);
         } catch (error) {
             return false;
         }
@@ -39,14 +33,46 @@ const RegistrationForm: FC = () => {
         return true;
     };
 
+    const handleError = (error?: string) => {
+        toast.error(error);
+    };
+
+    useEffect(() => {
+        if (isLoading) {
+            toast.info("Please check wallet", { autoClose: false });
+        }
+
+        if (isSuccess) {
+            toast.dismiss();
+            toast.success("Registered Successfully");
+        }
+
+        if (isError) {
+            toast.dismiss();
+            if (
+                error?.message.includes(
+                    "VM Exception while processing transaction: revert Manufacturer already registerd"
+                )
+            ) {
+                handleError(
+                    "Transaction reverted: Manufacturer already registered"
+                );
+            } else {
+                handleError(error?.name);
+            }
+        }
+    });
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        // TODO: same here
-        // console.log(isConnected);
+        if (!isConnected) {
+            toast.error("Please connect wallet", { toastId: "wallet" });
+            return;
+        }
 
         if (!verifyLogo(logo)) {
-            // TODO: inform to user with toast
+            toast.error("Logo invalid", { toastId: "logo" });
             return;
         }
 
@@ -60,17 +86,6 @@ const RegistrationForm: FC = () => {
             registrarId,
             taxId
         );
-
-        // TODO: handle errors and success with toasts
-
-        // console.log(companyName);
-        // console.log(registrationNo);
-        // console.log(logo);
-        // console.log(address);
-        // console.log(email);
-        // console.log(registrar);
-        // console.log(registrarId);
-        // console.log(taxId);
     };
 
     const handleChanges = (event: ChangeEvent<HTMLInputElement>) => {
