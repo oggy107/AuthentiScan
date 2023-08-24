@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Input from "./Input";
 import Button from "./Button";
 import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
+import { RegistrationVMExceptions } from "../errors";
 
 const RegistrationForm: FC = () => {
     const [companyName, setCompanyName] = useState<string>("");
@@ -51,11 +52,13 @@ const RegistrationForm: FC = () => {
             toast.dismiss();
             if (
                 error?.message.includes(
-                    "VM Exception while processing transaction: revert Manufacturer already registerd"
+                    RegistrationVMExceptions.ManufacturerAlreadyRegistered
+                        .Exception
                 )
             ) {
                 handleError(
-                    "Transaction reverted: Manufacturer already registered"
+                    RegistrationVMExceptions.ManufacturerAlreadyRegistered
+                        .ExceptionMessage
                 );
             } else {
                 handleError(error?.name);
