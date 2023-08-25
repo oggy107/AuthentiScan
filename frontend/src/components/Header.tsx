@@ -2,11 +2,13 @@ import { Web3Button, useWeb3ModalTheme } from "@web3modal/react";
 import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { Route } from "../types";
+import { useHeader } from "../context/HeaderContext";
 import logoFull from "../assets/logoFull.png";
 
 const Header: FC = (): JSX.Element => {
-    const { theme, setTheme } = useWeb3ModalTheme();
+    const { setTheme } = useWeb3ModalTheme();
+
+    const { navLinks } = useHeader();
 
     useEffect(() => {
         setTheme({
@@ -16,16 +18,20 @@ const Header: FC = (): JSX.Element => {
                 "--w3m-container-border-radius": "20px",
             },
         });
-    }, [theme, setTheme]);
+    }, []);
 
     return (
         <div className="w-full h-[70px] bg-gradient-to-r from-[#001589] to-[#F32786] flex justify-between items-center px-[60px] py-[15px]">
-            {/* <div className="text-2xl font-bold text-white">AuthentiScan</div> */}
             <div>
                 <img src={logoFull} alt="logo" />
             </div>
             <ul className="flex items-center gap-[30px]">
-                <li className="text-white text-sm font-normal capitalize">
+                {navLinks.map((navLink) => (
+                    <li className="text-white text-sm font-normal capitalize">
+                        <Link to={navLink.route}>{navLink.name}</Link>
+                    </li>
+                ))}
+                {/* <li className="text-white text-sm font-normal capitalize">
                     <Link to={Route.HOME}>Home</Link>
                 </li>
                 <li className="text-white text-sm font-normal capitalize">
@@ -36,7 +42,7 @@ const Header: FC = (): JSX.Element => {
                 </li>
                 <li className="text-white text-sm font-normal capitalize">
                     <Link to={Route.REGISTER}>Register</Link>
-                </li>
+                </li> */}
                 <Web3Button />
             </ul>
         </div>

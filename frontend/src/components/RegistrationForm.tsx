@@ -69,7 +69,7 @@ const RegistrationForm: FC = () => {
                 handleError(error?.name);
             }
         }
-    });
+    }, [isLoading, isSuccess, isError]);
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();

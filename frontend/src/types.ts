@@ -9,3 +9,8 @@ export enum Route {
 export interface ProgressProps {
     stage: "details" | "welcome";
 }
+
+// export interface NavLink {
+//     name: string;
+//     route: Route;
+// }
