@@ -113,7 +113,7 @@ const ManufacturerDetails: FC<ManufacturerDetailsProps> = ({
 };
 
 const Profile: FC = () => {
-    const { setNavLinks } = useHeader();
+    const { setNavLinks, setProfile } = useHeader();
     const { address, isConnected } = useAccount();
     const { manufacturer, isSuccess, isError, error } =
         useGetManufacturer(address);
@@ -152,6 +152,14 @@ const Profile: FC = () => {
                 );
             } else {
                 toast.error(error?.name);
+            }
+        }
+        if (isSuccess) {
+            if (manufacturer) {
+                setProfile({
+                    name: manufacturer.name,
+                    logo: manufacturer.logo,
+                });
             }
         }
     }, [isError, isSuccess]);
