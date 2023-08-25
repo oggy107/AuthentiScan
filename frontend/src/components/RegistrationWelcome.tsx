@@ -22,7 +22,7 @@ const RegistrationWelcome: FC = () => {
                     </div>
                     <Button
                         title="Go to Dashboard"
-                        onclick={() => navigate(Route.HOME)}
+                        onclick={() => navigate(Route.PROFILE)}
                     />
                     <br />
                 </div>

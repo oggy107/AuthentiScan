@@ -3,6 +3,7 @@ export enum Route {
     REGISTER = "/register",
     ABOUT = "/about",
     HOW_IT_WORKS = "/how-it-works",
+    PROFILE = "/profile",
 }
 
 export interface ProgressProps {

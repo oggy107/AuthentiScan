@@ -7,6 +7,7 @@ import Root from "./routes/root";
 import Home from "./routes/home";
 import About from "./routes/about";
 import Register from "./routes/register";
+import Profile from "./routes/profile";
 
 import { Route } from "./types";
 
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: Route.REGISTER,
                 Component: Register,
+            },
+            {
+                path: Route.PROFILE,
+                Component: Profile,
             },
         ],
     },
