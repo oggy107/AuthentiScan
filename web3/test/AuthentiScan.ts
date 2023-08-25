@@ -2,13 +2,12 @@ import { ethers } from "hardhat";
 import chai from "chai";
 import { AuthentiScan, Verify } from "../typechain-types";
 import {
+    ProductExternalStruct,
     ProductStruct,
     ProductStructOutput,
 } from "../typechain-types/contracts/AuthentiScan";
 
 describe("AuthentiScan", () => {
-    const MANUFACTURER_NAME = "Toei";
-
     const manufacturer = {
         name: "Toei",
         registrationNo: "101",
@@ -93,8 +92,6 @@ describe("AuthentiScan", () => {
         let authentiScan: AuthentiScan;
         let verify: Verify;
 
-        const MANUFACTURER_NAME = "Toei";
-
         before(async () => {
             authentiScan = await deploy();
             verify = await deployVerify(
@@ -147,6 +144,21 @@ describe("AuthentiScan", () => {
                     manufacturer.taxId
                 )
             ).to.be.revertedWith("manufacturer already exists");
+        });
+
+        it("should return details of manufacturer", async () => {
+            const a = (await ethers.getSigners())[0].address;
+            const returnedManufacturer = await authentiScan.getManufacturer(a);
+
+            chai.expect(returnedManufacturer[0]).to.equal(a);
+            chai.expect(returnedManufacturer[1]).to.be.false;
+            chai.expect(returnedManufacturer[2]).to.equal(manufacturer.name);
+            chai.expect(returnedManufacturer[3]).to.equal(
+                manufacturer.registrationNo
+            );
+            chai.expect(returnedManufacturer[4]).to.equal(manufacturer.logo);
+            chai.expect(returnedManufacturer[5]).to.equal(manufacturer.address);
+            chai.expect(returnedManufacturer[6]).to.equal(manufacturer.email);
         });
     });
 
@@ -262,6 +274,35 @@ describe("AuthentiScan", () => {
             chai.expect(await authentiScan.isVerified(manufacturerId)).to.be
                 .true;
         });
+
+        it("should return only verified manufacturers", async () => {
+            const { authentiScan, verify } = await cleanDeploy();
+            await registerManufacturer(authentiScan, accounts[0]);
+            await registerManufacturer(authentiScan, accounts[1]);
+            await registerManufacturer(authentiScan, accounts[2]);
+            await registerManufacturer(authentiScan, accounts[3]);
+
+            await verify.addTrustedEntity(accounts[4]);
+
+            await verify
+                .connect(await ethers.getSigner(accounts[4]))
+                .vote(accounts[1]);
+
+            await verify
+                .connect(await ethers.getSigner(accounts[4]))
+                .vote(accounts[2]);
+
+            const returnedVerifiedManufacturers =
+                await authentiScan.getVerifiedManufacturers();
+
+            chai.expect(returnedVerifiedManufacturers).to.have.lengthOf(2);
+            chai.expect(returnedVerifiedManufacturers[0][0]).to.equal(
+                accounts[1]
+            );
+            chai.expect(returnedVerifiedManufacturers[1][0]).to.equal(
+                accounts[2]
+            );
+        });
     });
 
     describe("Product registraction", () => {
@@ -282,33 +323,51 @@ describe("AuthentiScan", () => {
         });
 
         it("should allow only verified manufacturer to register a products", async () => {
-            const products_1: Array<ProductStruct> = [
+            const products_1: Array<ProductExternalStruct> = [
                 {
                     id: "101",
                     name: "toy",
+                    description: "toy description",
+                    MFDDate: "27-8-2021",
+                    EXPDate: "",
                 },
                 {
                     id: "102",
                     name: "sky walker",
+                    description: "this is luke baby",
+                    MFDDate: "7-2-2020",
+                    EXPDate: "",
                 },
                 {
                     id: "103",
                     name: "fish",
+                    description: "my fish sank",
+                    MFDDate: "7-2-2022",
+                    EXPDate: "3-6-2023",
                 },
             ];
 
-            const products_2: Array<ProductStruct> = [
+            const products_2: Array<ProductExternalStruct> = [
                 {
                     id: "104",
                     name: "bird",
+                    description: "red bird",
+                    MFDDate: "7-9-2022",
+                    EXPDate: "3-6-2023",
                 },
                 {
                     id: "105",
                     name: "sky walker",
+                    description: "walking the sky",
+                    MFDDate: "7-1-2022",
+                    EXPDate: "",
                 },
                 {
                     id: "106",
                     name: "dolphin",
+                    description: "my dolphin is big",
+                    MFDDate: "23-2-2022",
+                    EXPDate: "3-7-2026",
                 },
             ];
 
@@ -348,33 +407,44 @@ describe("AuthentiScan", () => {
         });
 
         it("should not allow duplicate product and empty products array registration", async () => {
-            const products: Array<ProductStruct> = [
+            const products: Array<ProductExternalStruct> = [
                 {
                     id: "101",
                     name: "toy",
+                    description: "toy description",
+                    MFDDate: "27-8-2021",
+                    EXPDate: "",
                 },
                 {
                     id: "102",
-                    name: "toy",
+                    name: "sky walker",
+                    description: "this is luke baby",
+                    MFDDate: "7-2-2020",
+                    EXPDate: "",
                 },
                 {
                     id: "103",
-                    name: "toy",
-                },
-                {
-                    id: "104",
-                    name: "toy",
+                    name: "fish",
+                    description: "my fish sank",
+                    MFDDate: "7-2-2022",
+                    EXPDate: "3-6-2023",
                 },
             ];
 
-            const duplicateProducts: Array<ProductStruct> = [
-                {
-                    id: "104",
-                    name: "toy",
-                },
+            const duplicateProducts: Array<ProductExternalStruct> = [
                 {
                     id: "105",
-                    name: "toy",
+                    name: "sky walker",
+                    description: "walking the sky",
+                    MFDDate: "7-1-2022",
+                    EXPDate: "",
+                },
+                {
+                    id: "106",
+                    name: "dolphin",
+                    description: "my dolphin is big",
+                    MFDDate: "23-2-2022",
+                    EXPDate: "3-7-2026",
                 },
             ];
 
@@ -395,41 +465,54 @@ describe("AuthentiScan", () => {
         });
 
         it("should only allow verified manufacturers to fetch their own products", async () => {
-            const firstManufacturerProducts: Array<ProductStruct> = [
+            const firstManufacturerProducts: Array<ProductExternalStruct> = [
                 {
-                    id: "101",
-                    name: "toy",
+                    id: "105",
+                    name: "sky walker",
+                    description: "walking the sky",
+                    MFDDate: "7-1-2022",
+                    EXPDate: "",
                 },
                 {
-                    id: "102",
-                    name: "toy",
+                    id: "106",
+                    name: "dolphin",
+                    description: "my dolphin is big",
+                    MFDDate: "23-2-2022",
+                    EXPDate: "3-7-2026",
                 },
             ];
 
             const firstManufacturerOutput = [
-                ["101", "toy"],
-                ["102", "toy"],
+                ["105", "sky walker", "walking the sky", "7-1-2022", ""],
+                [
+                    "106",
+                    "dolphin",
+                    "my dolphin is big",
+                    "23-2-2022",
+                    "3-7-2026",
+                ],
             ];
 
-            const secondManufacturerProducts: Array<ProductStruct> = [
+            const secondManufacturerProducts: Array<ProductExternalStruct> = [
                 {
-                    id: "abc",
-                    name: "book",
+                    id: "101",
+                    name: "toy",
+                    description: "toy description",
+                    MFDDate: "27-8-2021",
+                    EXPDate: "",
                 },
                 {
-                    id: "cde",
-                    name: "cup",
-                },
-                {
-                    id: "xyz",
-                    name: "pen",
+                    id: "102",
+                    name: "sky walker",
+                    description: "this is luke baby",
+                    MFDDate: "7-2-2020",
+                    EXPDate: "",
                 },
             ];
 
             const secondManufacturerOutput = [
-                ["abc", "book"],
-                ["cde", "cup"],
-                ["xyz", "pen"],
+                ["101", "toy", "toy description", "27-8-2021", ""],
+                ["102", "sky walker", "this is luke baby", "7-2-2020", ""],
             ];
 
             const firstManufacturerId = accounts[0];
@@ -460,30 +543,62 @@ describe("AuthentiScan", () => {
                 .connect(await ethers.getSigner(firstManufacturerId))
                 .getProducts();
 
-            chai.expect(registredProductsByFirstManufacturer).to.deep.equal(
-                firstManufacturerOutput
+            chai.expect(registredProductsByFirstManufacturer[0][0]).to.equal(
+                firstManufacturerOutput[0][0]
+            );
+
+            chai.expect(registredProductsByFirstManufacturer[0][1]).to.equal(
+                firstManufacturerOutput[0][1]
+            );
+
+            chai.expect(registredProductsByFirstManufacturer[0][3]).to.equal(
+                firstManufacturerOutput[0][3]
+            );
+
+            chai.expect(registredProductsByFirstManufacturer[0][4]).to.equal(
+                firstManufacturerOutput[0][4]
             );
 
             await authentiScan
                 .connect(await ethers.getSigner(secondManufacturerId))
                 .registerProducts(secondManufacturerProducts);
 
-            chai.expect(
-                await authentiScan
-                    .connect(await ethers.getSigner(secondManufacturerId))
-                    .getProducts()
-            ).to.deep.equal(secondManufacturerOutput);
+            const registredProductsBySecondManufacturer = await authentiScan
+                .connect(await ethers.getSigner(secondManufacturerId))
+                .getProducts();
+
+            chai.expect(registredProductsBySecondManufacturer[0][0]).to.equal(
+                secondManufacturerOutput[0][0]
+            );
+
+            chai.expect(registredProductsBySecondManufacturer[0][1]).to.equal(
+                secondManufacturerOutput[0][1]
+            );
+
+            chai.expect(registredProductsBySecondManufacturer[0][2]).to.equal(
+                secondManufacturerOutput[0][2]
+            );
+
+            chai.expect(registredProductsBySecondManufacturer[0][3]).to.equal(
+                secondManufacturerOutput[0][3]
+            );
         });
 
         it("should allow consumer to verify product", async () => {
-            const products: Array<ProductStruct> = [
+            const products: Array<ProductExternalStruct> = [
                 {
                     id: "101",
                     name: "toy",
+                    description: "toy description",
+                    MFDDate: "27-8-2021",
+                    EXPDate: "",
                 },
                 {
                     id: "102",
                     name: "sky walker",
+                    description: "this is luke baby",
+                    MFDDate: "7-2-2020",
+                    EXPDate: "",
                 },
             ];
 
@@ -499,9 +614,16 @@ describe("AuthentiScan", () => {
                 "Product is not register with by this manufacturer"
             );
 
-            chai.expect(
-                await authentiScan.verifyProduct(manufacturerId, "102")
-            ).to.be.deep.equal(["102", "sky walker"]);
+            const product = await authentiScan.verifyProduct(
+                manufacturerId,
+                "102"
+            );
+
+            chai.expect(product[0]).to.be.equal("102");
+            chai.expect(product[1]).to.be.equal("sky walker");
+            chai.expect(product[2]).to.be.equal("this is luke baby");
+            chai.expect(product[3]).to.be.equal("7-2-2020");
+            chai.expect(product[4]).to.be.equal("");
         });
     });
 });
