@@ -12,9 +12,24 @@ struct Manufacturer {
     string registrarName;
     string registrarId;
     string taxId;
+    uint regTime;
 }
 
+/** Product to be sent to externally */
+struct ProductExternal {
+    string id;
+    string name;
+    string description;
+    string MFDDate;
+    string EXPDate;
+}
+
+/** Internal Product implimentation */
 struct Product {
     string id;
     string name;
+    string description;
+    string MFDDate;
+    string EXPDate;
+    uint regTime;
 }

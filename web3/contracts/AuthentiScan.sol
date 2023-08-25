@@ -12,6 +12,7 @@ contract AuthentiScan {
 
     // manufacturer id => Manufacturer
     mapping (address => Manufacturer) public manufacturers;
+    address[] verifiedManufacturerAddresses;
     Verify verify;
 
     // manufacturer id => array of Product
@@ -57,6 +58,7 @@ contract AuthentiScan {
         manufacturer.registrarId = _registrarId;
         manufacturer.taxId = _taxId;
         manufacturer.isVerified = false;
+        manufacturer.regTime = block.timestamp;
 
         manufacturers[msg.sender] = manufacturer;
 
@@ -82,6 +84,7 @@ contract AuthentiScan {
         require(msg.sender == getVerifyContractAddress(), "Verification can only be set by Verify contract");
 
         manufacturers[id].isVerified = true;
+        verifiedManufacturerAddresses.push(id);
     }
 
     function getUnverifiedManufacturers(address[] memory unverifiedManufacturers) public view returns (Manufacturer[] memory) {
@@ -94,6 +97,31 @@ contract AuthentiScan {
         }
 
         return ret;
+    }
+
+    /**
+     * @dev Get verified manufacturers
+     * @return Manufacturer[] array of verified manufacturers
+     */
+    function getVerifiedManufacturers() external view returns (Manufacturer[] memory) {
+        Manufacturer[] memory ret = new Manufacturer[](verifiedManufacturerAddresses.length);
+
+        for (uint i = 0; i < verifiedManufacturerAddresses.length; i++) {
+            ret[i] = manufacturers[verifiedManufacturerAddresses[i]];
+        }
+
+        return ret;
+    }
+
+    /**
+     * @dev Get manufacturer details
+     * @param id id of the manufacturer
+     * @return Manufacturer manufacturer details
+     */
+    function getManufacturer(address id) external view returns (Manufacturer memory) {
+        require(exists(id), "Manufacturer is not registered. Please register manufacturer first");
+
+        return manufacturers[id];
     }
 
     /**
@@ -118,14 +146,24 @@ contract AuthentiScan {
      * @dev Register products
      * @param _products array of Product to be registerd
      */
-    function registerProducts(Product[] memory _products) external onlyVerified {
+    function registerProducts(ProductExternal[] memory _products) external onlyVerified {
         require(_products.length > 0, "products array must include at least one product");
 
         for (uint i = 0; i < _products.length; i++) {
             require(!ProductUtils.exists(productIds[msg.sender], _products[i].id), "Can not register multiple products with same id");
 
-            products[msg.sender].push(_products[i]);
-            productIds[msg.sender].push(_products[i].id);
+            Product memory product;
+
+            product.id = _products[i].id;
+            product.name = _products[i].name;
+            product.description = _products[i].description;
+            product.MFDDate = _products[i].MFDDate;
+            product.EXPDate = _products[i].EXPDate;
+            product.MFDDate = _products[i].MFDDate;
+            product.regTime = block.timestamp;
+
+            products[msg.sender].push(product);
+            productIds[msg.sender].push(product.id);
         }
     }
 
