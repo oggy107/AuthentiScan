@@ -19,13 +19,13 @@ const Footer: FC = (): JSX.Element => {
                     </div>
                     <ul className="flex items-center gap-[30px]">
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.home}>Home</Link>
+                            <Link to={Route.HOME}>Home</Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.about}>About Us</Link>
+                            <Link to={Route.ABOUT}>About Us</Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.how_it_works}>How it works</Link>
+                            <Link to={Route.HOW_IT_WORKS}>How it works</Link>
                         </li>
                     </ul>
                     <ul className="flex items-center gap-[30px]">

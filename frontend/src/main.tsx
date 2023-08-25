@@ -17,19 +17,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
     {
-        path: Route.home,
+        path: Route.HOME,
         Component: Root,
         children: [
             {
-                path: Route.home,
+                path: Route.HOME,
                 Component: Home,
             },
             {
-                path: Route.about,
+                path: Route.ABOUT,
                 Component: About,
             },
             {
-                path: Route.register,
+                path: Route.REGISTER,
                 Component: Register,
             },
         ],
