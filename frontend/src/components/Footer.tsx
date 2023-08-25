@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import { Route } from "../types";
-import logoFull from "../assets/logoFull.png";
+import logoFull from "../assets/logoFull-light.svg";
 
 import tw from "../assets/icons/1.svg";
 import fb from "../assets/icons/2.svg";

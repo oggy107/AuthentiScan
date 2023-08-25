@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { useHeader } from "../context/HeaderContext";
-import logoFull from "../assets/logoFull.png";
+import logoFull from "../assets/logoFull-light.svg";
 import { Route } from "../types";
 
 const Header: FC = (): JSX.Element => {
