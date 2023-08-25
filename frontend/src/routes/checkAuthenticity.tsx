@@ -1,31 +1,56 @@
 import { FC } from "react";
 import Back from "../assets/icons/Back-btn.svg";
+import logo from "../assets/logo.svg";
+import txtlogo from "../assets/logoFull-dark.svg"
 
 const CheckAuthenticity: FC = (): JSX.Element => {
   return (
     <div className="flex flex-grow">
-      <div className="w-full h-ful">
-        <div className=" w-[700px] ">
-          <div>
+      <div className="w-full h-ful flex justify-around">
+        <div className=" w-[700px] h-[607px]">
+          <div className="mt-[15px] ml-[15px]">
             <img src={Back} alt="Back button" />
           </div>
-          check authenticity page
+          
           <div className="mt-[129px] ml-[234px]">
-            <div>logo authentiscan</div>
+            <div>
+                   <span>
+                      <img src={txtlogo} alt="Authentiscan" />
+                   </span>
 
-            <div className="mt-[74.19px]">
+
+            </div>
+
+            <div className="mt-[74.19px] w-[345px] h-[190px] ">
+              
+              <div className="text-gray-500 text-base font-normal ">
               AuthentiScan Let you easily verify your products using blockchain
-              technology. It’s easy as 1 2 3: Select manufacturer Enter Product
-              unique id Hit check button and we will search the whole universe
+              technology. 
+              </div>
+              <br />
+              < span className=" text-gray-700 text-base font-normal">It’s easy as 1 2 3:</span> <br /> 
+              <div className="text-gray-500 text-base font-normal ">
+
+              Select manufacturer <br />Enter Product
+              unique id <br /> Hit check button <br /> <br />and we will search the whole universe
               for your product authenticity.
+
+
+              </div>
+              
             </div>
           </div>
         </div>
 
-        <div className="w-[721px] h-[621px]"></div>
-          select company
-        {/* Here you go :> */}
-        {/* Use prebuilt componentes wherever you can such as Button and Input */}
+        <div className="w-[721px] h-[607px]"></div>
+        
+        {/* second panel */}
+
+           <div>
+
+            
+           </div>
+
       </div>
     </div>
   );
