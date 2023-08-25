@@ -5,13 +5,18 @@ import RegistrationProgress from "../components/RegistrationProgress";
 import RegistrationForm from "../components/RegistrationForm";
 import RegistrationWelcome from "../components/RegistrationWelcome";
 import { StageContextProvider, useStage } from "../context/StageContext";
+import { useHeader } from "../context/HeaderContext";
+import { DefaultNavLinks } from "../config";
 
 const RegisterStageContextWrapper: FC = () => {
     const stageContext = useStage();
     const { stage, setStage } = stageContext!;
 
+    const { setNavLinks } = useHeader();
+
     useEffect(() => {
         setStage("welcome");
+        setNavLinks(DefaultNavLinks);
     });
 
     return (

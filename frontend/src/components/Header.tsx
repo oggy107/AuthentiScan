@@ -26,8 +26,11 @@ const Header: FC = (): JSX.Element => {
                 <img src={logoFull} alt="logo" />
             </div>
             <ul className="flex items-center gap-[30px]">
-                {navLinks.map((navLink) => (
-                    <li className="text-white text-sm font-normal capitalize">
+                {navLinks.map((navLink, index) => (
+                    <li
+                        className="text-white text-sm font-normal capitalize"
+                        key={index}
+                    >
                         <Link to={navLink.route}>{navLink.name}</Link>
                     </li>
                 ))}

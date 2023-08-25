@@ -6,36 +6,13 @@ import {
     useContext,
 } from "react";
 
-import { Route } from "../types";
-
-interface NavLink {
-    name: string;
-    route: Route;
-}
+import { NavLink } from "../types";
+import { DefaultNavLinks } from "../config";
 
 interface Profile {
     name: string;
     logo: string;
 }
-
-const DefaultNavLinks: Array<NavLink> = [
-    {
-        name: "Home",
-        route: Route.HOME,
-    },
-    {
-        name: "About Us",
-        route: Route.ABOUT,
-    },
-    {
-        name: "How It Works",
-        route: Route.HOW_IT_WORKS,
-    },
-    {
-        name: "Register",
-        route: Route.REGISTER,
-    },
-];
 
 interface HeaderContextI {
     navLinks: Array<NavLink>;

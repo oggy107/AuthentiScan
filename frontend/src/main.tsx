@@ -8,6 +8,8 @@ import Home from "./routes/home";
 import About from "./routes/about";
 import Register from "./routes/register";
 import Profile from "./routes/profile";
+import AddProduct from "./routes/addProducts";
+import ViewProduct from "./routes/viewProducts";
 
 import { Route } from "./types";
 
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
             {
                 path: Route.PROFILE,
                 Component: Profile,
+            },
+            {
+                path: Route.ADD_PRODUCTS,
+                Component: AddProduct,
+            },
+            {
+                path: Route.VIEW_PRODUCTS,
+                Component: ViewProduct,
             },
         ],
     },
