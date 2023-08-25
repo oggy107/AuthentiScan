@@ -36,3 +36,15 @@ export const WalletErrors: WalletErrorsI = {
         ErrorMessage: "User denied transaction",
     },
 };
+
+interface ProductRegistrationErrorsI {
+    ManufacturerNotVerified: VMExeption;
+}
+
+export const ProductRegistrationException: ProductRegistrationErrorsI = {
+    ManufacturerNotVerified: {
+        Exception:
+            "VM Exception while processing transaction: revert Only verified Manufacturers can call this method",
+        ExceptionMessage: "You are not yet verified",
+    },
+};

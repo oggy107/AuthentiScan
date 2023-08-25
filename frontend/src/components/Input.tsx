@@ -1,4 +1,9 @@
-import { FC, HTMLInputTypeAttribute, HTMLProps } from "react";
+import {
+    FC,
+    HTMLInputTypeAttribute,
+    HTMLProps,
+    TextareaHTMLAttributes,
+} from "react";
 
 interface InputProps {
     lable: string;
@@ -8,6 +13,7 @@ interface InputProps {
     className?: HTMLProps<HTMLElement>["className"];
     value?: HTMLProps<HTMLInputElement>["value"];
     onChange?: HTMLProps<HTMLInputElement>["onChange"];
+    onTextAreaChange?: TextareaHTMLAttributes<HTMLTextAreaElement>["onChange"];
     textarea?: boolean;
     rows?: HTMLProps<HTMLTextAreaElement>["rows"];
     cols?: HTMLProps<HTMLTextAreaElement>["cols"];
@@ -22,6 +28,7 @@ const Input: FC<InputProps> = ({
     value,
     onChange,
     textarea,
+    onTextAreaChange,
     rows,
     cols,
 }) => {
@@ -34,6 +41,9 @@ const Input: FC<InputProps> = ({
                     name={name}
                     rows={rows}
                     cols={cols}
+                    required={required}
+                    value={value}
+                    onChange={onTextAreaChange}
                 ></textarea>
             ) : (
                 <input

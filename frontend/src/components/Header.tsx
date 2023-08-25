@@ -6,12 +6,41 @@ import { useNavigate } from "react-router-dom";
 import { useHeader } from "../context/HeaderContext";
 import logoFull from "../assets/logoFull-light.svg";
 import { Route } from "../types";
+import { useUser } from "../context/UserContext";
+import { DefaultNavLinks } from "../config";
 
 const Header: FC = (): JSX.Element => {
     const { setTheme } = useWeb3ModalTheme();
     const navigate = useNavigate();
 
-    const { navLinks, profile } = useHeader();
+    const { navLinks, setNavLinks } = useHeader();
+
+    const { manufacturer, profile } = useUser();
+
+    useEffect(() => {
+        if (manufacturer) {
+            setNavLinks([
+                {
+                    name: "Home",
+                    route: Route.HOME,
+                },
+                {
+                    name: "Profile",
+                    route: Route.PROFILE,
+                },
+                {
+                    name: "Add Products",
+                    route: Route.ADD_PRODUCTS,
+                },
+                {
+                    name: "View Products",
+                    route: Route.VIEW_PRODUCTS,
+                },
+            ]);
+        } else {
+            setNavLinks(DefaultNavLinks);
+        }
+    }, [manufacturer]);
 
     useEffect(() => {
         setTheme({

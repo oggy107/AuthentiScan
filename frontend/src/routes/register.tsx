@@ -1,23 +1,26 @@
 import { FC, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-// import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
 import RegistrationProgress from "../components/RegistrationProgress";
 import RegistrationForm from "../components/RegistrationForm";
 import RegistrationWelcome from "../components/RegistrationWelcome";
 import { StageContextProvider, useStage } from "../context/StageContext";
-import { useHeader } from "../context/HeaderContext";
-import { DefaultNavLinks } from "../config";
+import { Route } from "../types";
+import { useUser } from "../context/UserContext";
 
 const RegisterStageContextWrapper: FC = () => {
     const stageContext = useStage();
-    const { stage, setStage } = stageContext!;
+    const { stage } = stageContext!;
 
-    const { setNavLinks } = useHeader();
+    const navigate = useNavigate();
+
+    const { manufacturer } = useUser();
 
     useEffect(() => {
-        setStage("welcome");
-        setNavLinks(DefaultNavLinks);
-    });
+        if (manufacturer) {
+            navigate(Route.PROFILE);
+        }
+    }, [manufacturer]);
 
     return (
         <div className="flex flex-grow">

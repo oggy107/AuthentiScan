@@ -17,3 +17,17 @@ export interface NavLink {
     name: string;
     route: Route;
 }
+
+export interface Manufacturer {
+    id: `0x${string}`;
+    isVerified: boolean;
+    name: string;
+    registrationNo: string;
+    logo: string;
+    companyAddress: string;
+    email: string;
+    registrarName: string;
+    registrarId: string;
+    taxId: string;
+    regTime: bigint;
+}

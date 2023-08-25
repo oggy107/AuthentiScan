@@ -1,10 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useAccount } from "wagmi";
 
-import { Route } from "../types";
-import { useHeader } from "../context/HeaderContext";
-import useGetManufacturer from "../hooks/useGetManufacturer";
-import { RegistrationVMExceptions } from "../errors";
+import useRegisterProducts from "../hooks/useRegisterProduct";
+import { WalletErrors, ProductRegistrationException } from "../errors";
 import { toast } from "react-toastify";
 import fullLogo from "../assets/logoFull-dark.svg";
 import Input from "../components/Input";
@@ -31,19 +29,115 @@ const Info: FC = () => {
     );
 };
 
-const AddProductForm: FC = () => {
+interface AddProductFormProps {
+    isConnected: boolean;
+}
+
+const AddProductForm: FC<AddProductFormProps> = ({ isConnected }) => {
+    const [productName, setProductName] = useState<string>("");
+    const [productId, setProductId] = useState<string>("");
+    const [productDesc, setProductDesc] = useState<string>("");
+    const [productMFGDate, setProductMFGDate] = useState<string>("");
+    const [productEXPDate, setProductEXPDate] = useState<string>("");
+
+    const { registerProduct, isEnabled, isLoading, isSuccess, isError, error } =
+        useRegisterProducts();
+
+    const handleChanges = (event: ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        switch (name) {
+            case "productName":
+                setProductName(value);
+                break;
+            case "productId":
+                setProductId(value);
+                break;
+            case "productDesc":
+                setProductDesc(value);
+                break;
+            case "productMFGDate":
+                setProductMFGDate(value);
+                break;
+            case "productEXPDate":
+                setProductEXPDate(value);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        if (event.target.name == "productDesc") {
+            setProductDesc(event.target.value);
+        }
+    };
+
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+
+        if (!isConnected) {
+            toast.error("Please connect wallet", { toastId: "wallet" });
+            return;
+        }
+
+        registerProduct(
+            productId,
+            productName,
+            productDesc,
+            productMFGDate,
+            productEXPDate
+        );
+    };
+
+    const handleError = (error: Error | null) => {
+        if (
+            error?.message.includes(
+                ProductRegistrationException.ManufacturerNotVerified.Exception
+            )
+        ) {
+            toast.error(
+                ProductRegistrationException.ManufacturerNotVerified
+                    .ExceptionMessage
+            );
+        } else if (
+            error?.message.includes(WalletErrors.WalletUserRejected.Error)
+        ) {
+            toast.error(WalletErrors.WalletUserRejected.ErrorMessage);
+        } else {
+            toast.error(error?.name);
+        }
+    };
+
+    useEffect(() => {
+        if (isLoading) {
+            toast.dismiss();
+            toast.info("Please check wallet");
+        }
+
+        if (isSuccess) {
+            toast.dismiss();
+            toast.success("Product Registered Successfully");
+        }
+
+        if (isError) {
+            toast.dismiss();
+            handleError(error);
+        }
+    }, [isLoading, isSuccess, isError]);
+
     return (
-        <form className="p-5 mt-[20px] mx-[90px]">
+        <form onSubmit={handleSubmit} className="p-5 mt-[20px] mx-[90px]">
             <div className="text-gray-950 text-4xl font-bold mb-2">
                 Enter Product Details
             </div>
-            {/* <div className="w-full flex gap-5"></div> */}
             <div className="mt-[20px]">
                 <Input
                     lable="Product Name"
                     name="productName"
-                    // value={}
-                    // onChange={}
+                    value={productName}
+                    onChange={handleChanges}
                     required
                 />
             </div>
@@ -51,8 +145,8 @@ const AddProductForm: FC = () => {
                 <Input
                     lable="Product unique Id"
                     name="productId"
-                    // value={}
-                    // onChange={}
+                    value={productId}
+                    onChange={handleChanges}
                     required
                 />
             </div>
@@ -60,8 +154,8 @@ const AddProductForm: FC = () => {
                 <Input
                     lable="Product Description"
                     name="productDesc"
-                    // value={}
-                    // onChange={}
+                    value={productDesc}
+                    onTextAreaChange={handleTextAreaChange}
                     required
                     textarea
                 />
@@ -70,8 +164,8 @@ const AddProductForm: FC = () => {
                 <Input
                     lable="MFG Date"
                     name="productMFGDate"
-                    // value={}
-                    // onChange={}
+                    value={productMFGDate}
+                    onChange={handleChanges}
                     required
                     type="date"
                 />
@@ -80,74 +174,31 @@ const AddProductForm: FC = () => {
                 <Input
                     lable="Expiration Date"
                     name="productEXPDate"
-                    // value={}
-                    // onChange={}
+                    value={productEXPDate}
+                    onChange={handleChanges}
                     type="date"
                     required
                 />
             </div>
-            <Button className="mt-4" title="Register Product" type="submit" />
+            <Button
+                className="mt-4"
+                title="Register Product"
+                type="submit"
+                disabled={isLoading || !isEnabled}
+            />
         </form>
     );
 };
 
 const AddProduct: FC = (): JSX.Element => {
-    const { setNavLinks, setProfile } = useHeader();
-    const { address, isConnected } = useAccount();
-    const { manufacturer, isSuccess, isError, error } =
-        useGetManufacturer(address);
+    const { isConnected } = useAccount();
 
-    useEffect(() => {
-        setNavLinks([
-            {
-                name: "Home",
-                route: Route.HOME,
-            },
-            {
-                name: "Profile",
-                route: Route.PROFILE,
-            },
-            {
-                name: "Add Products",
-                route: Route.ADD_PRODUCTS,
-            },
-            {
-                name: "View Products",
-                route: Route.VIEW_PRODUCTS,
-            },
-        ]);
-    }, []);
-
-    useEffect(() => {
-        if (isError) {
-            if (
-                error?.message.includes(
-                    RegistrationVMExceptions.ManufacturerNotRegistered.Exception
-                )
-            ) {
-                toast.error(
-                    RegistrationVMExceptions.ManufacturerNotRegistered
-                        .ExceptionMessage
-                );
-            } else {
-                toast.error(error?.name);
-            }
-        }
-        if (isSuccess) {
-            if (manufacturer) {
-                setProfile({
-                    name: manufacturer.name,
-                    logo: manufacturer.logo,
-                });
-            }
-        }
-    }, [isError, isSuccess]);
     return (
         <div className="flex flex-grow">
             <div className="w-full h-ful">
                 <div className="w-full h-full grid grid-cols-2">
                     <Info />
-                    <AddProductForm />
+                    <AddProductForm isConnected={isConnected} />
                 </div>
             </div>
         </div>

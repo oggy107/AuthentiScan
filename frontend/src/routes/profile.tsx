@@ -1,12 +1,7 @@
-import { FC, useEffect } from "react";
-import { useAccount } from "wagmi";
-import { toast } from "react-toastify";
-
-import { useHeader } from "../context/HeaderContext";
-import useGetManufacturer from "../hooks/useGetManufacturer";
-import { Route } from "../types";
-import { RegistrationVMExceptions } from "../errors";
+import { FC } from "react";
 import verifiedLogo from "../assets/icons/verified.svg";
+
+import { useUser } from "../context/UserContext";
 
 const VerifiedMessage: FC = () => {
     return (
@@ -113,56 +108,7 @@ const ManufacturerDetails: FC<ManufacturerDetailsProps> = ({
 };
 
 const Profile: FC = () => {
-    const { setNavLinks, setProfile } = useHeader();
-    const { address, isConnected } = useAccount();
-    const { manufacturer, isSuccess, isError, error } =
-        useGetManufacturer(address);
-
-    useEffect(() => {
-        setNavLinks([
-            {
-                name: "Home",
-                route: Route.HOME,
-            },
-            {
-                name: "Profile",
-                route: Route.PROFILE,
-            },
-            {
-                name: "Add Products",
-                route: Route.ADD_PRODUCTS,
-            },
-            {
-                name: "View Products",
-                route: Route.VIEW_PRODUCTS,
-            },
-        ]);
-    }, []);
-
-    useEffect(() => {
-        if (isError) {
-            if (
-                error?.message.includes(
-                    RegistrationVMExceptions.ManufacturerNotRegistered.Exception
-                )
-            ) {
-                toast.error(
-                    RegistrationVMExceptions.ManufacturerNotRegistered
-                        .ExceptionMessage
-                );
-            } else {
-                toast.error(error?.name);
-            }
-        }
-        if (isSuccess) {
-            if (manufacturer) {
-                setProfile({
-                    name: manufacturer.name,
-                    logo: manufacturer.logo,
-                });
-            }
-        }
-    }, [isError, isSuccess]);
+    const { manufacturer } = useUser();
 
     return (
         <div className="flex flex-grow">

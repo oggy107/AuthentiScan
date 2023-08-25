@@ -13,12 +13,10 @@ const RegistrationForm: FC = () => {
     const [registrationNo, setRegistrationNo] = useState<string>("");
     const [logo, setLogo] = useState<string>("");
     const [address, setAddress] = useState<string>("");
-    // const [website, setWebsite] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [registrar, setRegistrar] = useState<string>("");
     const [registrarId, setRegistrarId] = useState<string>("");
     const [taxId, setTaxId] = useState<string>("");
-    // const [bankNo, setBankNo] = useState<string>("")
 
     const { register, isEnabled, isLoading, isSuccess, isError, error } =
         useRegisterManufacturer();
@@ -116,9 +114,6 @@ const RegistrationForm: FC = () => {
             case "address":
                 setAddress(value);
                 break;
-            // case "website":
-            //     setWebsite(value);
-            //     break;
             case "email":
                 setEmail(value);
                 break;
@@ -131,9 +126,6 @@ const RegistrationForm: FC = () => {
             case "taxId":
                 setTaxId(value);
                 break;
-            // case "bankNo":
-            //     setBankNo(value);
-            //     break;
             default:
                 break;
         }
@@ -180,13 +172,6 @@ const RegistrationForm: FC = () => {
                 />
             </div>
             <div className="w-full flex gap-5 mt-[20px]">
-                {/* <Input
-                    lable="Website"
-                    name="website"
-                    value={website}
-                    onChange={handleChanges}
-                    required
-                /> */}
                 <Input
                     lable="Official Email"
                     name="email"
@@ -222,16 +207,6 @@ const RegistrationForm: FC = () => {
                     required
                 />
             </div>
-            {/* <div className="mt-[20px]">
-                <Input
-                    className="w-[49%]"
-                    lable="Bank number (for identification purposes)"
-                    name="bankNo"
-                    value={bankNo}
-                    onChange={handleChanges}
-                    required
-                />
-            </div> */}
             <Button
                 className="mt-[50px]"
                 title="Register"
