@@ -48,3 +48,21 @@ export const ProductRegistrationException: ProductRegistrationErrorsI = {
         ExceptionMessage: "You are not yet verified",
     },
 };
+
+interface TrustedEntitiesErrorsI {
+    NotOwner: VMExeption;
+    AlreadyTrusted: VMExeption;
+}
+
+export const TrustedEntitiesErrors: TrustedEntitiesErrorsI = {
+    NotOwner: {
+        Exception:
+            "VM Exception while processing transaction: revert Ownable: caller is not the owner",
+        ExceptionMessage: "Only owner can perform this action",
+    },
+    AlreadyTrusted: {
+        Exception:
+            "VM Exception while processing transaction: revert This entity is already trusted",
+        ExceptionMessage: "This entity is already trusted",
+    },
+};

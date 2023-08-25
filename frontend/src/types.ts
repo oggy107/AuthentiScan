@@ -7,6 +7,7 @@ export enum Route {
     ADD_PRODUCTS = "/add-products",
     VIEW_PRODUCTS = "/view-products",
     CHECK_AUTHENTICITY = "/check-authenticity",
+    ADD_TRUSTED_ENTITY = "/add-trusted-entity",
 }
 
 export interface ProgressProps {
