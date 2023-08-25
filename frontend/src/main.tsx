@@ -10,6 +10,7 @@ import Register from "./routes/register";
 import Profile from "./routes/profile";
 import AddProduct from "./routes/addProducts";
 import ViewProduct from "./routes/viewProducts";
+import CheckAuthenticity from "./routes/checkAuthenticity";
 
 import { Route } from "./types";
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: Route.VIEW_PRODUCTS,
                 Component: ViewProduct,
+            },
+            {
+                path: Route.CHECK_AUTHENTICITY,
+                Component: CheckAuthenticity,
             },
         ],
     },

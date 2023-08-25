@@ -14,6 +14,10 @@ export const DefaultNavLinks: Array<NavLink> = [
         route: Route.HOW_IT_WORKS,
     },
     {
+        name: "Check Authenticity",
+        route: Route.CHECK_AUTHENTICITY,
+    },
+    {
         name: "Register",
         route: Route.REGISTER,
     },

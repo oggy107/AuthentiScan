@@ -27,6 +27,11 @@ const Footer: FC = (): JSX.Element => {
                         <li className="text-white text-sm font-normal capitalize">
                             <Link to={Route.HOW_IT_WORKS}>How it works</Link>
                         </li>
+                        <li className="text-white text-sm font-normal capitalize">
+                            <Link to={Route.CHECK_AUTHENTICITY}>
+                                Check Authenticity
+                            </Link>
+                        </li>
                     </ul>
                     <ul className="flex items-center gap-[30px]">
                         <li>
