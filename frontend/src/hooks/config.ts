@@ -2,12 +2,88 @@
 
 const config = {
     authentiscanContract: {
-        address: "5b1869D9A4C187F2EAa108f3062412ecf0526b24",
+        address: "CfEB869F69431e42cdB54A4F4f105C19C080A601",
         abi: [
             {
                 inputs: [],
                 stateMutability: "nonpayable",
                 type: "constructor",
+            },
+            {
+                inputs: [
+                    {
+                        internalType: "address",
+                        name: "id",
+                        type: "address",
+                    },
+                ],
+                name: "getManufacturer",
+                outputs: [
+                    {
+                        components: [
+                            {
+                                internalType: "address",
+                                name: "id",
+                                type: "address",
+                            },
+                            {
+                                internalType: "bool",
+                                name: "isVerified",
+                                type: "bool",
+                            },
+                            {
+                                internalType: "string",
+                                name: "name",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrationNo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "logo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "companyAddress",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "email",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarName",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "taxId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
+                            },
+                        ],
+                        internalType: "struct Manufacturer",
+                        name: "",
+                        type: "tuple",
+                    },
+                ],
+                stateMutability: "view",
+                type: "function",
             },
             {
                 inputs: [],
@@ -24,6 +100,26 @@ const config = {
                                 internalType: "string",
                                 name: "name",
                                 type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "description",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "MFDDate",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "EXPDate",
+                                type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
                             },
                         ],
                         internalType: "struct Product[]",
@@ -95,6 +191,81 @@ const config = {
                                 internalType: "string",
                                 name: "taxId",
                                 type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
+                            },
+                        ],
+                        internalType: "struct Manufacturer[]",
+                        name: "",
+                        type: "tuple[]",
+                    },
+                ],
+                stateMutability: "view",
+                type: "function",
+            },
+            {
+                inputs: [],
+                name: "getVerifiedManufacturers",
+                outputs: [
+                    {
+                        components: [
+                            {
+                                internalType: "address",
+                                name: "id",
+                                type: "address",
+                            },
+                            {
+                                internalType: "bool",
+                                name: "isVerified",
+                                type: "bool",
+                            },
+                            {
+                                internalType: "string",
+                                name: "name",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrationNo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "logo",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "companyAddress",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "email",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarName",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "registrarId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "taxId",
+                                type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
                             },
                         ],
                         internalType: "struct Manufacturer[]",
@@ -197,6 +368,11 @@ const config = {
                         name: "taxId",
                         type: "string",
                     },
+                    {
+                        internalType: "uint256",
+                        name: "regTime",
+                        type: "uint256",
+                    },
                 ],
                 stateMutability: "view",
                 type: "function",
@@ -263,8 +439,23 @@ const config = {
                                 name: "name",
                                 type: "string",
                             },
+                            {
+                                internalType: "string",
+                                name: "description",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "MFDDate",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "EXPDate",
+                                type: "string",
+                            },
                         ],
-                        internalType: "struct Product[]",
+                        internalType: "struct ProductExternal[]",
                         name: "_products",
                         type: "tuple[]",
                     },
@@ -314,6 +505,26 @@ const config = {
                                 name: "name",
                                 type: "string",
                             },
+                            {
+                                internalType: "string",
+                                name: "description",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "MFDDate",
+                                type: "string",
+                            },
+                            {
+                                internalType: "string",
+                                name: "EXPDate",
+                                type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
+                            },
                         ],
                         internalType: "struct Product",
                         name: "",
@@ -327,7 +538,7 @@ const config = {
     },
 
     verifyContract: {
-        address: "3c63250aFA2470359482d98749f2d60D2971c818",
+        address: "79183957Be84C0F4dA451E534d5bA5BA3FB9c696",
         abi: [
             {
                 inputs: [
@@ -445,6 +656,11 @@ const config = {
                                 internalType: "string",
                                 name: "taxId",
                                 type: "string",
+                            },
+                            {
+                                internalType: "uint256",
+                                name: "regTime",
+                                type: "uint256",
                             },
                         ],
                         internalType: "struct Manufacturer[]",
