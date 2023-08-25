@@ -11,6 +11,8 @@ import Profile from "./routes/profile";
 import AddProduct from "./routes/addProducts";
 import ViewProduct from "./routes/viewProducts";
 import CheckAuthenticity from "./routes/checkAuthenticity";
+import AddTrustedEntity from "./routes/addTrustedEntity";
+import ErrorPage from "./ErrorPage";
 
 import { Route } from "./types";
 
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
     {
         path: Route.HOME,
         Component: Root,
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: Route.HOME,
@@ -51,6 +54,10 @@ const router = createBrowserRouter([
             {
                 path: Route.CHECK_AUTHENTICITY,
                 Component: CheckAuthenticity,
+            },
+            {
+                path: Route.ADD_TRUSTED_ENTITY,
+                Component: AddTrustedEntity,
             },
         ],
     },

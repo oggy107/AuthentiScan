@@ -37,12 +37,30 @@ export const WalletErrors: WalletErrorsI = {
     },
 };
 
-interface ProductRegistrationErrorsI {
-    ManufacturerNotVerified: VMExeption;
+interface TrustedEntitiesErrorsI {
+    NotOwner: VMExeption;
+    AlreadyTrusted: VMExeption;
 }
 
-export const ProductRegistrationException: ProductRegistrationErrorsI = {
-    ManufacturerNotVerified: {
+export const TrustedEntitiesErrors: TrustedEntitiesErrorsI = {
+    NotOwner: {
+        Exception:
+            "VM Exception while processing transaction: revert Ownable: caller is not the owner",
+        ExceptionMessage: "Only owner can perform this action",
+    },
+    AlreadyTrusted: {
+        Exception:
+            "VM Exception while processing transaction: revert This entity is already trusted",
+        ExceptionMessage: "This entity is already trusted",
+    },
+};
+
+interface AccessErrorsI {
+    NotVerified: VMExeption;
+}
+
+export const AccessErrors: AccessErrorsI = {
+    NotVerified: {
         Exception:
             "VM Exception while processing transaction: revert Only verified Manufacturers can call this method",
         ExceptionMessage: "You are not yet verified",
