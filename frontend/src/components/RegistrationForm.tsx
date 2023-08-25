@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Input from "./Input";
 import Button from "./Button";
 import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
-import { RegistrationVMExceptions } from "../errors";
+import { RegistrationVMExceptions, WalletErrors } from "../errors";
 import { useStage } from "../context/StageContext";
 
 const RegistrationForm: FC = () => {
@@ -38,8 +38,23 @@ const RegistrationForm: FC = () => {
         return true;
     };
 
-    const handleError = (error?: string) => {
-        toast.error(error);
+    const handleError = (error: Error | null) => {
+        if (
+            error?.message.includes(
+                RegistrationVMExceptions.ManufacturerAlreadyRegistered.Exception
+            )
+        ) {
+            toast.error(
+                RegistrationVMExceptions.ManufacturerAlreadyRegistered
+                    .ExceptionMessage
+            );
+        } else if (
+            error?.message.includes(WalletErrors.WalletUserRejected.Error)
+        ) {
+            toast.error(WalletErrors.WalletUserRejected.ErrorMessage);
+        } else {
+            toast.error(error?.name);
+        }
     };
 
     useEffect(() => {
@@ -55,19 +70,7 @@ const RegistrationForm: FC = () => {
 
         if (isError) {
             toast.dismiss();
-            if (
-                error?.message.includes(
-                    RegistrationVMExceptions.ManufacturerAlreadyRegistered
-                        .Exception
-                )
-            ) {
-                handleError(
-                    RegistrationVMExceptions.ManufacturerAlreadyRegistered
-                        .ExceptionMessage
-                );
-            } else {
-                handleError(error?.name);
-            }
+            handleError(error);
         }
     }, [isLoading, isSuccess, isError]);
 
