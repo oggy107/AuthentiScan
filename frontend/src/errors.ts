@@ -10,6 +10,7 @@ interface WalletError {
 
 interface RegistrationErrorsI {
     ManufacturerAlreadyRegistered: VMExeption;
+    ManufacturerNotRegistered: VMExeption;
 }
 
 export const RegistrationVMExceptions: RegistrationErrorsI = {
@@ -17,6 +18,11 @@ export const RegistrationVMExceptions: RegistrationErrorsI = {
         Exception:
             "VM Exception while processing transaction: revert Manufacturer already registerd",
         ExceptionMessage: "Manufacturer already registerd",
+    },
+    ManufacturerNotRegistered: {
+        Exception:
+            "VM Exception while processing transaction: revert Manufacturer is not registered. Please register manufacturer first",
+        ExceptionMessage: "Manufacturer not registered",
     },
 };
 

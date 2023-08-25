@@ -15,7 +15,7 @@ const RegisterStageContextWrapper: FC = () => {
     const { setNavLinks } = useHeader();
 
     useEffect(() => {
-        // setStage("welcome");
+        setStage("welcome");
         setNavLinks(DefaultNavLinks);
     });
 
