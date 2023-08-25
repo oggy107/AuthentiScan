@@ -2,11 +2,15 @@ import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useAccount } from "wagmi";
 
 import useRegisterProducts from "../hooks/useRegisterProduct";
-import { WalletErrors, ProductRegistrationException } from "../errors";
+import { WalletErrors, AccessErrors } from "../errors";
 import { toast } from "react-toastify";
 import fullLogo from "../assets/logoFull-dark.svg";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { useUser } from "../context/UserContext";
+import duck from "../assets/animation_duck.gif";
+import { useNavigate } from "react-router-dom";
+import { Route } from "../types";
 
 const Info: FC = () => {
     return (
@@ -92,15 +96,8 @@ const AddProductForm: FC<AddProductFormProps> = ({ isConnected }) => {
     };
 
     const handleError = (error: Error | null) => {
-        if (
-            error?.message.includes(
-                ProductRegistrationException.ManufacturerNotVerified.Exception
-            )
-        ) {
-            toast.error(
-                ProductRegistrationException.ManufacturerNotVerified
-                    .ExceptionMessage
-            );
+        if (error?.message.includes(AccessErrors.NotVerified.Exception)) {
+            toast.error(AccessErrors.NotVerified.ExceptionMessage);
         } else if (
             error?.message.includes(WalletErrors.WalletUserRejected.Error)
         ) {
@@ -192,14 +189,29 @@ const AddProductForm: FC<AddProductFormProps> = ({ isConnected }) => {
 
 const AddProduct: FC = (): JSX.Element => {
     const { isConnected } = useAccount();
+    const { manufacturer } = useUser();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!manufacturer) {
+            navigate(Route.REGISTER);
+        }
+    }, [manufacturer]);
 
     return (
         <div className="flex flex-grow">
-            <div className="w-full h-ful">
-                <div className="w-full h-full grid grid-cols-2">
-                    <Info />
-                    <AddProductForm isConnected={isConnected} />
-                </div>
+            <div className="w-full h-full">
+                {manufacturer?.isVerified ? (
+                    <div className="w-full h-full grid grid-cols-2">
+                        <Info />
+                        <AddProductForm isConnected={isConnected} />
+                    </div>
+                ) : (
+                    <div className="w-full h-full flex flex-col gap-6 justify-center items-center">
+                        <div className="text-5xl">You Are Not Verified Yet</div>
+                        <img src={duck} alt="duck" />
+                    </div>
+                )}
             </div>
         </div>
     );
