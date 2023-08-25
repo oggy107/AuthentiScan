@@ -39,7 +39,7 @@ const Header: FC = (): JSX.Element => {
                 ))}
                 {profile && (
                     <div
-                        className="h-8 flex justify-between items-center gap-1"
+                        className="h-8 flex justify-between items-center gap-1 cursor-pointer"
                         onClick={() => {
                             navigate(Route.PROFILE);
                         }}
