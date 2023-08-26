@@ -1,5 +1,6 @@
 import { FC } from "react";
 import DropDown from "../assets/icons/drop-down.svg"
+import useGetManufacturer from "../hooks/useGetManufacturer";
 
 const CheckAuthenicityForm: FC = () => {
     return <form className="p-5 mt-[20px] mx-[90px]">
@@ -46,8 +47,15 @@ const CheckAuthenicityForm: FC = () => {
                   Enter Product ID
                   </div>
 
-                  <div className=" w-[383.45px] h-[43.74px] bg-purple-500 bg-opacity-5 rounded-lg border border-gray-300">
+                  <div >
+                    <input 
+                    className="pl-4 w-[383.45px] h-[43.74px] bg-purple-500 bg-opacity-5 rounded-lg border border-gray-300"
+                    type="number" 
+                  
+                    />
                     
+                      
+
                   </div>
                    
               </div>
@@ -56,9 +64,9 @@ const CheckAuthenicityForm: FC = () => {
 
                     <div className="w-[176px] h-[43px] bg-blue-900 rounded-[7px] flex items-center justify-center">
 
-                        <div className="text-white text-base font-normal text-center"> 
-                          Check 
-                        </div>
+                        <button className="text-white text-base font-normal text-center"> 
+                          CHECK
+                        </button>
 
                     </div>
                 
