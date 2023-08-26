@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useRouteError } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -9,9 +8,6 @@ import Button from "./components/Button";
 import { useNavigate } from "react-router-dom";
 
 const Error: FC = () => {
-    // const error = useRouteError();
-    // console.log(error);
-
     const navigate = useNavigate();
 
     return (

@@ -1,37 +1,7 @@
-// import { useContractRead } from "wagmi";
 import { readContract } from "@wagmi/core";
 
 import config from "./config";
 import { Product } from "../types";
-
-// const useVerifyProduct = async (
-//     manufacturerId: `0x${string}`,
-//     productId: string
-// ) => {
-//     const { data, isError, error, isLoading, isSuccess } = useContractRead({
-//         address: `0x${config.authentiscanContract.address}`,
-//         abi: config.authentiscanContract.abi,
-//         functionName: "verifyProduct",
-//         args: [manufacturerId, productId],
-//     });
-
-//     return {
-//         verifiedProduct: data,
-//         isError,
-//         error,
-//         isLoading,
-//         isSuccess,
-//     };
-// };
-
-// interface Product {
-//     id: string;
-//     name: string;
-//     description: string;
-//     MFDDate: string;
-//     EXPDate: string;
-//     regTime: bigint;
-// }
 
 interface VerifiyProductReturnType {
     isSuccess: boolean;
