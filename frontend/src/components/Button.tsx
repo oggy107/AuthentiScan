@@ -5,6 +5,8 @@ interface ButtonProps {
     className?: HTMLProps<HTMLElement>["className"];
     type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
     disabled?: boolean;
+    primary?: boolean;
+    secondary?: boolean;
     onclick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 }
 
@@ -14,13 +16,19 @@ const Button: FC<ButtonProps> = ({
     type,
     disabled,
     onclick,
+    primary,
+    secondary,
 }) => {
     return (
         <button
-            className={`w-fit px-[59.5px] py-[12px] hover:transition-all rounded-[7px] text-white bg-[#001589] ${className} ${
+            className={`w-fit px-[59.5px] py-[12px] hover:transition-all rounded-[7px]  ${className} ${
                 disabled
                     ? "bg-opacity-50"
                     : "hover:shadow-button hover:cursor-pointer"
+            } ${
+                secondary
+                    ? "bg-neutral-100 text-black"
+                    : " bg-[#001589] text-white"
             }`}
             type={type}
             disabled={disabled}
@@ -34,6 +42,8 @@ const Button: FC<ButtonProps> = ({
 Button.defaultProps = {
     type: "button",
     disabled: false,
+    primary: true,
+    secondary: false,
 };
 
 export default Button;

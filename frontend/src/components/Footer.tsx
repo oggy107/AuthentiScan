@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 
 import { Route } from "../types";
 import logoFull from "../assets/logoFull-light.svg";
-
 import tw from "../assets/icons/1.svg";
 import fb from "../assets/icons/2.svg";
 import insta from "../assets/icons/3.svg";
@@ -11,7 +11,7 @@ import gh from "../assets/icons/4.svg";
 
 const Footer: FC = (): JSX.Element => {
     return (
-        <div className="w-full h-[155px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
+        <div className="w-full h-[155px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center fixed bottom-0 z-10">
             <div className="w-full h-full flex flex-col pl-[115px] pr-[116.47px] pt-9 justify-center items-center gap-[30px]">
                 <div className="w-full flex justify-between">
                     <div>
@@ -22,10 +22,14 @@ const Footer: FC = (): JSX.Element => {
                             <Link to={Route.HOME}>Home</Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.ABOUT}>About Us</Link>
+                            <NavHashLink to={Route.ABOUT} smooth>
+                                AboutUs
+                            </NavHashLink>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.HOW_IT_WORKS}>How it works</Link>
+                            <NavHashLink to={Route.HOW_IT_WORKS} smooth>
+                                How it works
+                            </NavHashLink>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
                             <Link to={Route.CHECK_AUTHENTICITY}>

@@ -23,7 +23,7 @@ const RegisterStageContextWrapper: FC = () => {
     }, [manufacturer]);
 
     return (
-        <div className="flex flex-grow">
+        <div className="flex flex-grow  mt-[70px] mb-[155px]">
             <div className="w-full h-full grid grid-cols-4">
                 <div className="min-w-[360px] shadow-2xl">
                     <RegistrationProgress />

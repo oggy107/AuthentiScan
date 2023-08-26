@@ -39,7 +39,7 @@ const ViewProduct: FC = (): JSX.Element => {
     }, [isError]);
 
     return (
-        <div className="flex flex-grow">
+        <div className="flex flex-grow mt-[70px] mb-[155px]">
             <div className="w-full h-full px-5 flex items-center flex-col">
                 <div className="mt-2 flex flex-col items-center">
                     <div className="text-gray-950 text-4xl font-bold mb-2">
