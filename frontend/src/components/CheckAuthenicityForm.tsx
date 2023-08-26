@@ -52,10 +52,16 @@ const CheckAuthenicityForm: FC = () => {
                    
               </div>
 
-              <div className="mt-[58.26px] start-14 " >
+              <div className="mt-[58.26px] flex justify-end" >
 
+                    <div className="w-[176px] h-[43px] bg-blue-900 rounded-[7px] flex items-center justify-center">
 
-                jhfalj
+                        <div className="text-white text-base font-normal text-center"> 
+                          Check 
+                        </div>
+
+                    </div>
+                
               </div>
                 
              </div>
