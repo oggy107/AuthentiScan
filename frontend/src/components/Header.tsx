@@ -53,7 +53,7 @@ const Header: FC = (): JSX.Element => {
     }, []);
 
     return (
-        <div className="w-full h-[70px] bg-gradient-to-r from-[#001589] to-[#F32786] flex justify-between items-center px-[60px] py-[15px]">
+        <div className="w-full h-[70px] bg-gradient-to-r from-[#001589] to-[#F32786] flex justify-between items-center px-[60px] py-[15px] fixed z-10">
             <div>
                 <img src={logoFull} alt="logo" />
             </div>

@@ -11,7 +11,7 @@ import gh from "../assets/icons/4.svg";
 
 const Footer: FC = (): JSX.Element => {
     return (
-        <div className="w-full h-[155px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center">
+        <div className="w-full h-[155px] bg-gradient-to-r from-[#001589] to-[#F30775] flex justify-center items-center fixed bottom-0 z-10">
             <div className="w-full h-full flex flex-col pl-[115px] pr-[116.47px] pt-9 justify-center items-center gap-[30px]">
                 <div className="w-full flex justify-between">
                     <div>
@@ -25,7 +25,9 @@ const Footer: FC = (): JSX.Element => {
                             <Link to={Route.ABOUT}>About Us</Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.HOW_IT_WORKS}>How it works</Link>
+                            <Link to={`${Route.HOME}#howItWorks`}>
+                                How it works
+                            </Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
                             <Link to={Route.CHECK_AUTHENTICITY}>

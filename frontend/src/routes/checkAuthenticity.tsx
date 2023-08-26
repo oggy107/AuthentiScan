@@ -38,8 +38,8 @@ const Info: FC = () => {
 
 const CheckAuthenticity: FC = (): JSX.Element => {
     return (
-        <div className="flex flex-grow">
-            <div className="w-full h-ful grid grid-cols-2 ">
+        <div className="flex flex-grow mt-[70px] mb-[155px]">
+            <div className="w-full h-full grid grid-cols-2 ">
                 <Info />
                 <CheckAuthenicityForm />
             </div>

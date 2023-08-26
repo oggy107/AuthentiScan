@@ -126,7 +126,7 @@ const Profile: FC = () => {
     const { manufacturer } = useUser();
 
     return (
-        <div className="flex flex-grow">
+        <div className="flex flex-grow mt-[70px] mb-[155px]">
             {manufacturer ? (
                 <div className="w-full h-full grid grid-cols-3">
                     {manufacturer.isVerified ? (

@@ -199,7 +199,7 @@ const AddProduct: FC = (): JSX.Element => {
     }, [manufacturer]);
 
     return (
-        <div className="flex flex-grow">
+        <div className="flex flex-grow mt-[70px] mb-[155px]">
             <div className="w-full h-full">
                 {manufacturer?.isVerified ? (
                     <div className="w-full h-full grid grid-cols-2">

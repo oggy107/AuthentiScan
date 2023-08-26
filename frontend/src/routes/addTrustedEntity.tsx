@@ -71,7 +71,7 @@ const AddTrustedEntity: FC = (): JSX.Element => {
     }, [isLoading, isSuccess, isError]);
 
     return (
-        <div className="flex flex-grow">
+        <div className="flex flex-grow mt-[70px] mb-[155px]">
             <div className="w-full h-full flex items-center flex-col">
                 <div className="text-gray-950 text-4xl font-bold mb-2 mt-[100px]">
                     Enter Trusted Entity Details
