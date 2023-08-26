@@ -5,6 +5,7 @@ import {
     SetStateAction,
     ChangeEvent,
     FormEvent,
+    useEffect,
 } from "react";
 import { toast } from "react-toastify";
 
@@ -12,8 +13,10 @@ import dropDownIcon from "../assets/icons/drop-down.svg";
 import Button from "./Button";
 import Input from "./Input";
 import useGetVerifiedManufacturers from "../hooks/useGetVerifiedManufacturers";
+import useVerifyProduct from "../hooks/useVerifyProduct";
 import { Manufacturer } from "../types";
 import selectedIcon from "../assets/icons/selected.svg";
+import { AccessErrors, WalletErrors } from "../errors";
 
 interface DropDownProps {
     selected: Manufacturer | undefined;
@@ -85,16 +88,44 @@ const DropDown: FC<DropDownProps> = ({
 };
 
 const CheckAuthenicityForm: FC = () => {
-    const { verifiedManufacturers } = useGetVerifiedManufacturers();
     const [selectedManufacturer, setSelectedManufacturer] =
         useState<Manufacturer>();
     const [productId, setProductId] = useState<string>("");
+
+    const { verifiedManufacturers } = useGetVerifiedManufacturers();
+    const { verifiedProduct, isError, isSuccess, error } = useVerifyProduct(
+        "0x2",
+        "sf"
+    );
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.name == "productId") {
             setProductId(event.target.value);
         }
     };
+
+    const handleErrors = (error: Error | null) => {
+        if (error?.message.includes(AccessErrors.NotVerified.Exception)) {
+            toast.error(AccessErrors.NotVerified.ExceptionMessage);
+        } else if (
+            error?.message.includes(WalletErrors.WalletUserRejected.Error)
+        ) {
+            toast.error(WalletErrors.WalletUserRejected.ErrorMessage);
+        } else {
+            toast.error(error?.name);
+        }
+    };
+
+    useEffect(() => {
+        toast.dismiss();
+
+        if (isError) {
+            handleErrors(error);
+        }
+        if (isSuccess) {
+            toast.success("Product Is Authentic");
+        }
+    }, [isError, isSuccess]);
 
     const hanldeSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -109,7 +140,7 @@ const CheckAuthenicityForm: FC = () => {
     return (
         <form
             onSubmit={hanldeSubmit}
-            className="p-5 mt-[20px] mx-[90px] w-full h-full flex items-center justify-center"
+            className="p-5 mt-[20px] mx-[90px] w-full h-full flex items-center"
         >
             <div className="w-[50%] mr-[265px]">
                 <div className="text-4xl font-bold text-center">
