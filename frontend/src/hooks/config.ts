@@ -2,7 +2,7 @@
 
 const config = {
     authentiscanContract: {
-        address: "CfEB869F69431e42cdB54A4F4f105C19C080A601",
+        address: "C89Ce4735882C9F0f0FE26686c53074E09B0D550",
         abi: [
             {
                 inputs: [],
@@ -538,7 +538,7 @@ const config = {
     },
 
     verifyContract: {
-        address: "79183957Be84C0F4dA451E534d5bA5BA3FB9c696",
+        address: "141f5fCa84Cc82EF0A6751241019471731289456",
         abi: [
             {
                 inputs: [
