@@ -5,13 +5,13 @@ import { ToastContainer } from "react-toastify";
 
 import Root from "./routes/root";
 import Home from "./routes/home";
-import About from "./routes/about";
 import Register from "./routes/register";
 import Profile from "./routes/profile";
 import AddProduct from "./routes/addProducts";
 import ViewProduct from "./routes/viewProducts";
 import CheckAuthenticity from "./routes/checkAuthenticity";
 import AddTrustedEntity from "./routes/addTrustedEntity";
+import Vote from "./routes/vote";
 import ErrorPage from "./ErrorPage";
 
 import { Route } from "./types";
@@ -30,10 +30,6 @@ const router = createBrowserRouter([
             {
                 path: Route.HOME,
                 Component: Home,
-            },
-            {
-                path: Route.ABOUT,
-                Component: About,
             },
             {
                 path: Route.REGISTER,
@@ -58,6 +54,10 @@ const router = createBrowserRouter([
             {
                 path: Route.ADD_TRUSTED_ENTITY,
                 Component: AddTrustedEntity,
+            },
+            {
+                path: Route.VOTE,
+                Component: Vote,
             },
         ],
     },

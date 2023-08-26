@@ -36,6 +36,9 @@ const Footer: FC = (): JSX.Element => {
                                 Check Authenticity
                             </Link>
                         </li>
+                        <li className="text-white text-sm font-normal capitalize">
+                            <Link to={Route.VOTE}>Trusted Entity</Link>
+                        </li>
                     </ul>
                     <ul className="flex items-center gap-[30px]">
                         <li>
