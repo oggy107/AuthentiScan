@@ -118,8 +118,18 @@ describe("AuthentiScan", () => {
             }
         });
 
-        it("should add manufacturer to unverified mempool", async () => {
-            const manufacturers = await verify.getUnverifiedManufacturers();
+        it("should add manufacturer to unverified mempool and allow only trusted entites to get unverified manufacturers", async () => {
+            chai.expect(verify.getUnverifiedManufacturers()).to.be.revertedWith(
+                "This enity is not trusted"
+            );
+
+            const account = (await ethers.getSigners())[2].address;
+            await verify.addTrustedEntity(account);
+
+            const manufacturers = await verify
+                .connect(await ethers.getSigner(account))
+                .getUnverifiedManufacturers();
+
             chai.expect(manufacturers.length).to.equal(1);
             chai.expect(manufacturers[0][1]).to.equal(false);
             chai.expect(manufacturers[0][2]).to.equal("Toei");

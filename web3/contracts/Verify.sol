@@ -76,6 +76,8 @@ contract Verify is Ownable {
      * @return Manufacturer[] unverified manufacturers array
      */
     function getUnverifiedManufacturers() external view returns (Manufacturer[] memory) {
+        require(Array.exists(trustedEntities, msg.sender), "This enity is not trusted");
+
         return authentiScan.getUnverifiedManufacturers(unverifiedManufacturers);
     }
 
