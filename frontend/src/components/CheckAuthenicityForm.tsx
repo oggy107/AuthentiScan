@@ -33,9 +33,7 @@ const DropDown: FC<DropDownProps> = ({
     };
 
     const handleSelection = (manufacturer: Manufacturer) => {
-        console.log(manufacturer);
         setSelected(manufacturer);
-        setDropDownOpen(false);
     };
 
     return (
@@ -62,8 +60,8 @@ const DropDown: FC<DropDownProps> = ({
                     />
                 </span>
                 <div
-                    className={`w-full bg-white rounded-lg shadow border border-gray-100 absolute left-0 bottom-0 translate-y-[102%] transition-all overflow-hidden ${
-                        dropDownOpen ? "max-h-[200px]" : "h-0 border-none"
+                    className={`w-full bg-white rounded-lg shadow border border-gray-100 absolute left-0 bottom-0 translate-y-[102%] transition-all overflow-y-scroll no-scrollbar ${
+                        dropDownOpen ? "max-h-[135px]" : "h-0 border-none"
                     }`}
                 >
                     {verifiedManufacturers?.map((manufacturer, index) => (
@@ -87,87 +85,7 @@ const DropDown: FC<DropDownProps> = ({
 };
 
 const CheckAuthenicityForm: FC = () => {
-    // const { verifiedManufacturers } = useGetVerifiedManufacturers();
-    const verifiedManufacturers = [
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40FA1_fendi",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Fendi",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40_gucci",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Gucci",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40FA_prada",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Prada",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40FA_tesla",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Tesla",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40FA_samsumg",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Samsung",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-        {
-            companyAddress: "Rome, Palazzo della Civiltà Italiana.",
-            email: "fendi@gmail.com",
-            id: "0x95cED938F7991cd0dFcb48F0a06a40FA_apple",
-            isVerified: true,
-            logo: "https://w7.pngwing.com/pngs/747/213/png-transparent-fendi-logo-icon.png",
-            name: "Apple",
-            regTime: 1693050375n,
-            registrarId: "jack1212112",
-            registrarName: "jack",
-            registrationNo: "24824727",
-            taxId: "824823482",
-        },
-    ];
+    const { verifiedManufacturers } = useGetVerifiedManufacturers();
     const [selectedManufacturer, setSelectedManufacturer] =
         useState<Manufacturer>();
     const [productId, setProductId] = useState<string>("");
