@@ -67,7 +67,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <Web3Provider>
             <RouterProvider router={router} />
-            <ToastContainer position="bottom-right" />
+            <ToastContainer />
         </Web3Provider>
     </React.StrictMode>
 );

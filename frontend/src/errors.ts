@@ -84,3 +84,15 @@ export const AccessErrors: AccessErrorsI = {
         ExceptionMessage: "You are not a trusted entity",
     },
 };
+
+interface ProductVerificationErrorsI {
+    ProductNotRegistered: VMExeption;
+}
+
+export const ProductVerificationErrors: ProductVerificationErrorsI = {
+    ProductNotRegistered: {
+        Exception:
+            "VM Exception while processing transaction: revert Product is not register with by this manufacturer",
+        ExceptionMessage: "Product is not registered",
+    },
+};

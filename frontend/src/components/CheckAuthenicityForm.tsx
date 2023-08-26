@@ -13,10 +13,10 @@ import dropDownIcon from "../assets/icons/drop-down.svg";
 import Button from "./Button";
 import Input from "./Input";
 import useGetVerifiedManufacturers from "../hooks/useGetVerifiedManufacturers";
-import useVerifyProduct from "../hooks/useVerifyProduct";
-import { Manufacturer } from "../types";
+import verifyProduct from "../hooks/verifyProduct";
+import { Manufacturer, Product } from "../types";
 import selectedIcon from "../assets/icons/selected.svg";
-import { AccessErrors, WalletErrors } from "../errors";
+import { ProductVerificationErrors, WalletErrors } from "../errors";
 
 interface DropDownProps {
     selected: Manufacturer | undefined;
@@ -87,16 +87,27 @@ const DropDown: FC<DropDownProps> = ({
     );
 };
 
-const CheckAuthenicityForm: FC = () => {
+interface CheckAuthenicityFormProps {
+    verifiedProduct: Product | undefined;
+    setVerifiedProduct: Dispatch<SetStateAction<Product | undefined>>;
+}
+
+const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
+    verifiedProduct,
+    setVerifiedProduct,
+}) => {
     const [selectedManufacturer, setSelectedManufacturer] =
         useState<Manufacturer>();
     const [productId, setProductId] = useState<string>("");
 
+    // const [isError, setIsError] = useState<boolean>(false);
+    // const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    // const [error, setError] = useState<Error | undefined>(undefined);
+    // const [verifiedProduct, setVerifiedProduct] = useState<Product | undefined>(
+    //     undefined
+    // );
+
     const { verifiedManufacturers } = useGetVerifiedManufacturers();
-    const { verifiedProduct, isError, isSuccess, error } = useVerifyProduct(
-        "0x2",
-        "sf"
-    );
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.name == "productId") {
@@ -104,9 +115,16 @@ const CheckAuthenicityForm: FC = () => {
         }
     };
 
-    const handleErrors = (error: Error | null) => {
-        if (error?.message.includes(AccessErrors.NotVerified.Exception)) {
-            toast.error(AccessErrors.NotVerified.ExceptionMessage);
+    const handleErrors = (error: Error | undefined) => {
+        toast.dismiss();
+        if (
+            error?.message.includes(
+                ProductVerificationErrors.ProductNotRegistered.Exception
+            )
+        ) {
+            toast.error(
+                ProductVerificationErrors.ProductNotRegistered.ExceptionMessage
+            );
         } else if (
             error?.message.includes(WalletErrors.WalletUserRejected.Error)
         ) {
@@ -116,25 +134,38 @@ const CheckAuthenicityForm: FC = () => {
         }
     };
 
-    useEffect(() => {
-        toast.dismiss();
+    // useEffect(() => {
+    //     toast.dismiss();
 
-        if (isError) {
-            handleErrors(error);
-        }
-        if (isSuccess) {
-            toast.success("Product Is Authentic");
-        }
-    }, [isError, isSuccess]);
+    //     if (isError) {
+    //         handleErrors(error);
+    //     }
+    // }, [isError]);
 
-    const hanldeSubmit = (event: FormEvent) => {
+    const hanldeSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        console.log(verifiedProduct);
 
         if (!selectedManufacturer) {
-            toast.error("Please Select Manufacturer");
+            toast.error("Please Select Manufacturer", { toastId: "error" });
+            return;
         }
 
-        console.log("hehe", selectedManufacturer, productId);
+        const { isSuccess, product, error } = await verifyProduct(
+            selectedManufacturer?.id || "0x",
+            productId
+        );
+
+        if (isSuccess) {
+            // setIsSuccess(true);
+            toast.success("Product is authentic", { toastId: "success" });
+            setVerifiedProduct(product);
+        } else {
+            // setIsError(true);
+            // setError(error);
+            handleErrors(error);
+            setVerifiedProduct(undefined);
+        }
     };
 
     return (
@@ -142,7 +173,7 @@ const CheckAuthenicityForm: FC = () => {
             onSubmit={hanldeSubmit}
             className="p-5 mt-[20px] mx-[90px] w-full h-full flex items-center"
         >
-            <div className="w-[50%] mr-[265px]">
+            <div className="w-[50%]">
                 <div className="text-4xl font-bold text-center">
                     Check Authenticity
                 </div>
@@ -171,7 +202,11 @@ const CheckAuthenicityForm: FC = () => {
                 </div>
 
                 <div className="mt-[58.26px] w-full flex justify-end">
-                    <Button title="Check" type="submit" />
+                    {verifiedProduct == undefined ? (
+                        <Button title="Check" type="submit" />
+                    ) : (
+                        <Button title="Product Details" />
+                    )}
                 </div>
             </div>
         </form>

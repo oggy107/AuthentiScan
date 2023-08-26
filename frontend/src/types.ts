@@ -34,3 +34,12 @@ export interface Manufacturer {
     taxId: string;
     regTime: bigint;
 }
+
+export interface Product {
+    id: string;
+    name: string;
+    description: string;
+    MFDDate: string;
+    EXPDate: string;
+    regTime: bigint;
+}
