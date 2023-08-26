@@ -5,7 +5,6 @@ import {
     SetStateAction,
     ChangeEvent,
     FormEvent,
-    useEffect,
 } from "react";
 import { toast } from "react-toastify";
 
@@ -100,13 +99,6 @@ const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
         useState<Manufacturer>();
     const [productId, setProductId] = useState<string>("");
 
-    // const [isError, setIsError] = useState<boolean>(false);
-    // const [isSuccess, setIsSuccess] = useState<boolean>(false);
-    // const [error, setError] = useState<Error | undefined>(undefined);
-    // const [verifiedProduct, setVerifiedProduct] = useState<Product | undefined>(
-    //     undefined
-    // );
-
     const { verifiedManufacturers } = useGetVerifiedManufacturers();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -134,14 +126,6 @@ const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
         }
     };
 
-    // useEffect(() => {
-    //     toast.dismiss();
-
-    //     if (isError) {
-    //         handleErrors(error);
-    //     }
-    // }, [isError]);
-
     const hanldeSubmit = async (event: FormEvent) => {
         event.preventDefault();
         console.log(verifiedProduct);
@@ -157,12 +141,9 @@ const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
         );
 
         if (isSuccess) {
-            // setIsSuccess(true);
             toast.success("Product is authentic", { toastId: "success" });
             setVerifiedProduct(product);
         } else {
-            // setIsError(true);
-            // setError(error);
             handleErrors(error);
             setVerifiedProduct(undefined);
         }

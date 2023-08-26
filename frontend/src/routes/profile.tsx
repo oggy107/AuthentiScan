@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import verifiedLogo from "../assets/icons/verified.svg";
@@ -124,10 +124,17 @@ const ManufacturerDetails: FC<ManufacturerDetailsProps> = ({
 
 const Profile: FC = () => {
     const { manufacturer } = useUser();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!manufacturer) {
+            navigate(Route.REGISTER);
+        }
+    }, [manufacturer]);
 
     return (
         <div className="flex flex-grow mt-[70px] mb-[155px]">
-            {manufacturer ? (
+            {manufacturer && (
                 <div className="w-full h-full grid grid-cols-3">
                     {manufacturer.isVerified ? (
                         <VerifiedMessage />
@@ -136,8 +143,6 @@ const Profile: FC = () => {
                     )}
                     <ManufacturerDetails manufacturer={manufacturer} />
                 </div>
-            ) : (
-                <div className="w-full h-full">Not Registred</div>
             )}
         </div>
     );
