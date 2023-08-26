@@ -2,7 +2,11 @@ import { FC, useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useAccount } from "wagmi";
 
 import useRegisterProducts from "../hooks/useRegisterProduct";
-import { WalletErrors, AccessErrors } from "../errors";
+import {
+    WalletErrors,
+    AccessErrors,
+    ProductRegistrationErrors,
+} from "../errors";
 import { toast } from "react-toastify";
 import fullLogo from "../assets/logoFull-dark.svg";
 import Input from "../components/Input";
@@ -98,6 +102,15 @@ const AddProductForm: FC<AddProductFormProps> = ({ isConnected }) => {
     const handleError = (error: Error | null) => {
         if (error?.message.includes(AccessErrors.NotVerified.Exception)) {
             toast.error(AccessErrors.NotVerified.ExceptionMessage);
+        } else if (
+            error?.message.includes(
+                ProductRegistrationErrors.ProductAlreadyRegistered.Exception
+            )
+        ) {
+            toast.error(
+                ProductRegistrationErrors.ProductAlreadyRegistered
+                    .ExceptionMessage
+            );
         } else if (
             error?.message.includes(WalletErrors.WalletUserRejected.Error)
         ) {

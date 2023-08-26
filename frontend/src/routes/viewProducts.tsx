@@ -50,7 +50,7 @@ const ViewProduct: FC = (): JSX.Element => {
                         blockchain
                     </div>
                 </div>
-                {products ? (
+                {products?.length ? (
                     <div className="w-full  mt-3">
                         <div className="grid grid-cols-6 border-b border-black border-opacity-25 px-[13px] py-[11px]">
                             <div className="text-zinc-500 text-xs font-medium">
@@ -73,7 +73,29 @@ const ViewProduct: FC = (): JSX.Element => {
                             </div>
                         </div>
                         {products?.map((product) => (
-                            <div key={product.id}>product.name</div>
+                            <div
+                                className="grid grid-cols-6 border-b border-black border-opacity-25 px-[13px] py-[11px]"
+                                key={product.id}
+                            >
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {product.name}
+                                </div>
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {product.description}
+                                </div>
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {product.id}
+                                </div>
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {product.MFDDate}
+                                </div>
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {product.EXPDate}
+                                </div>
+                                <div className="text-xs font-medium truncate pr-5">
+                                    {String(product.regTime)}
+                                </div>
+                            </div>
                         ))}
                     </div>
                 ) : manufacturer?.isVerified ? (

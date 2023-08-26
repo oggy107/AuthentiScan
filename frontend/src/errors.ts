@@ -37,6 +37,18 @@ export const WalletErrors: WalletErrorsI = {
     },
 };
 
+interface ProductRegistrationErrorsI {
+    ProductAlreadyRegistered: VMExeption;
+}
+
+export const ProductRegistrationErrors: ProductRegistrationErrorsI = {
+    ProductAlreadyRegistered: {
+        Exception:
+            "VM Exception while processing transaction: revert Can not register multiple products with same id",
+        ExceptionMessage: "Product already registered",
+    },
+};
+
 interface TrustedEntitiesErrorsI {
     NotOwner: VMExeption;
     AlreadyTrusted: VMExeption;
@@ -57,6 +69,7 @@ export const TrustedEntitiesErrors: TrustedEntitiesErrorsI = {
 
 interface AccessErrorsI {
     NotVerified: VMExeption;
+    EntityNotTrusted: VMExeption;
 }
 
 export const AccessErrors: AccessErrorsI = {
@@ -64,5 +77,10 @@ export const AccessErrors: AccessErrorsI = {
         Exception:
             "VM Exception while processing transaction: revert Only verified Manufacturers can call this method",
         ExceptionMessage: "You are not yet verified",
+    },
+    EntityNotTrusted: {
+        Exception:
+            "VM Exception while processing transaction: revert This enity is not trusted",
+        ExceptionMessage: "You are not a trusted entity",
     },
 };
