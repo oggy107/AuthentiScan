@@ -1,8 +1,47 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import dropDownIcon from "../assets/icons/drop-down.svg";
 import Button from "./Button";
 import Input from "./Input";
+
+const DropDown: FC = () => {
+    const [dropDownOpen, setDropDownOpen] = useState(false);
+
+    const toggleDropDown = () => {
+        setDropDownOpen((prev) => !prev);
+    };
+
+    return (
+        <div className="w-full relative">
+            <div className="mb-1">Select Manufacturer</div>
+            <div className="w-full px-3.5 py-2.5 rounded-lg shadow border border-gray-300 justify-start items-center gap-2 inline-flex">
+                <div className="w-full h-6 text-gray-500">
+                    Select Manufacturer
+                </div>
+                <span onClick={toggleDropDown}>
+                    <img
+                        className={`transition-all ${
+                            dropDownOpen ? "rotate-180" : ""
+                        }`}
+                        src={dropDownIcon}
+                        alt="dropdown button"
+                    />
+                </span>
+                <div
+                    className={`w-full bg-white rounded-lg shadow border border-gray-100 absolute left-0 bottom-0 translate-y-[102%] transition-all overflow-hidden ${
+                        dropDownOpen ? "h-[100px]" : "h-0"
+                    }`}
+                >
+                    <div>cool</div>
+                    <div>cool</div>
+                    <div>cool</div>
+                    <div>cool</div>
+                    <div>cool</div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const CheckAuthenicityForm: FC = () => {
     return (
@@ -15,21 +54,9 @@ const CheckAuthenicityForm: FC = () => {
                     Select manufacturer and product unique id to check the
                     authenticity of your product.
                 </div>
-                <div className="mt-[69px] w-full">
-                    <div className="text-black text-base font-normal w-[249px] h-[32px]">
-                        Select Manufacturer
-                    </div>
-                    <div className="w-[383px] h-11 px-3.5 py-2.5 rounded-lg shadow border border-gray-300 justify-start items-center gap-2 inline-flex">
-                        <div className="w-[327px] h-6 text-gray-500 text-base font-normal leading-normal">
-                            Select Manufacturer
-                        </div>
 
-                        <span>
-                            <img src={dropDownIcon} alt="dropdown button" />
-                        </span>
-
-                        <div className=""></div>
-                    </div>
+                <div className="mt-[69px]">
+                    <DropDown />
                 </div>
 
                 <div className="mt-[26px]">
