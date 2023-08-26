@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 
 import { Route } from "../types";
 import logoFull from "../assets/logoFull-light.svg";
-
 import tw from "../assets/icons/1.svg";
 import fb from "../assets/icons/2.svg";
 import insta from "../assets/icons/3.svg";
@@ -22,12 +22,14 @@ const Footer: FC = (): JSX.Element => {
                             <Link to={Route.HOME}>Home</Link>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={Route.ABOUT}>About Us</Link>
+                            <NavHashLink to={Route.ABOUT} smooth>
+                                AboutUs
+                            </NavHashLink>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
-                            <Link to={`${Route.HOME}#howItWorks`}>
+                            <NavHashLink to={Route.HOW_IT_WORKS} smooth>
                                 How it works
-                            </Link>
+                            </NavHashLink>
                         </li>
                         <li className="text-white text-sm font-normal capitalize">
                             <Link to={Route.CHECK_AUTHENTICITY}>

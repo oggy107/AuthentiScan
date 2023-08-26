@@ -2,6 +2,7 @@ import { Web3Button, useWeb3ModalTheme } from "@web3modal/react";
 import { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { NavHashLink } from "react-router-hash-link";
 
 import { useHeader } from "../context/HeaderContext";
 import logoFull from "../assets/logoFull-light.svg";
@@ -63,7 +64,13 @@ const Header: FC = (): JSX.Element => {
                         className="text-white text-sm font-normal capitalize"
                         key={index}
                     >
-                        <Link to={navLink.route}>{navLink.name}</Link>
+                        {navLink.hashRouter ? (
+                            <NavHashLink to={navLink.route} smooth>
+                                {navLink.name}
+                            </NavHashLink>
+                        ) : (
+                            <Link to={navLink.route}>{navLink.name}</Link>
+                        )}
                     </li>
                 ))}
                 {profile && (

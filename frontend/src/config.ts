@@ -8,10 +8,12 @@ export const DefaultNavLinks: Array<NavLink> = [
     {
         name: "About Us",
         route: Route.ABOUT,
+        hashRouter: true,
     },
     {
         name: "How It Works",
         route: Route.HOW_IT_WORKS,
+        hashRouter: true,
     },
     {
         name: "Check Authenticity",

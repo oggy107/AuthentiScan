@@ -24,7 +24,7 @@ const Card: FC<PropsWithChildren<CardProps>> = ({ title, children }) => {
 
 const AboutUs: FC = () => {
     return (
-        <div className="w-full flex flex-col justify-between">
+        <div id="about" className="w-full flex flex-col justify-between">
             <div className="text-4xl font-bold underline">About us</div>
             <div className="mt-[38px]">
                 Welcome to Authentiscan - a revolutionary leap into the future
@@ -151,11 +151,11 @@ const PointCard: FC<PropsWithChildren<CardProps>> = ({ title, children }) => {
 
 const HowItWorks: FC = () => {
     return (
-        <div className="w-full mt-[150px] relative flex justify-center">
-            <div
-                id="#howItWorks"
-                className="text-4xl font-bold underline mt-[82px] absolute left-0"
-            >
+        <div
+            id="howItWorks"
+            className="w-full mt-[150px] relative flex justify-center"
+        >
+            <div className="text-4xl font-bold underline mt-[82px] absolute left-0">
                 How it Works
             </div>
             <div className="w-[1500px]">

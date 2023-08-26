@@ -1,8 +1,8 @@
 export enum Route {
     HOME = "/",
     REGISTER = "/register",
-    ABOUT = "/about",
-    HOW_IT_WORKS = "/how-it-works",
+    ABOUT = "/#about",
+    HOW_IT_WORKS = "/#howItWorks",
     PROFILE = "/profile",
     ADD_PRODUCTS = "/add-products",
     VIEW_PRODUCTS = "/view-products",
@@ -17,6 +17,7 @@ export interface ProgressProps {
 export interface NavLink {
     name: string;
     route: Route;
+    hashRouter?: boolean;
 }
 
 export interface Manufacturer {

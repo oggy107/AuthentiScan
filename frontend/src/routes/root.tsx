@@ -8,7 +8,7 @@ import { UserContextProvider } from "../context/UserContext";
 
 const Root: FC = (): JSX.Element => {
     return (
-        <div className="w-full h-screen min-h-[700px] flex flex-col font-poppins min-w-[1600px]">
+        <div className="w-full h-screen min-h-[700px] flex flex-col font-poppins min-w-[1600px] overflow-scroll no-scrollbar">
             <UserContextProvider>
                 <HeaderContextProvider>
                     <Header />
