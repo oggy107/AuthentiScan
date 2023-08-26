@@ -111,7 +111,7 @@ const CheckAuthenicityForm: FC = () => {
             onSubmit={hanldeSubmit}
             className="p-5 mt-[20px] mx-[90px] w-full h-full flex items-center justify-center"
         >
-            <div className="w-[50%]">
+            <div className="w-[50%] mr-[265px]">
                 <div className="text-4xl font-bold text-center">
                     Check Authenticity
                 </div>
