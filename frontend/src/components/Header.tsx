@@ -9,6 +9,8 @@ import logoFull from "../assets/logoFull-light.svg";
 import { Route } from "../types";
 import { useUser } from "../context/UserContext";
 import { DefaultNavLinks } from "../config";
+import Home from "../routes/home";
+
 
 const Header: FC = (): JSX.Element => {
     const { setTheme } = useWeb3ModalTheme();
@@ -56,7 +58,9 @@ const Header: FC = (): JSX.Element => {
     return (
         <div className="w-full h-[70px] bg-gradient-to-r from-[#001589] to-[#F32786] flex justify-between items-center px-[60px] py-[15px] fixed z-10">
             <div>
-                <img src={logoFull} alt="logo" />
+
+                <Link to={Route.HOME} > <img src={logoFull} alt="logo" /></Link>
+                
             </div>
             <ul className="flex items-center gap-[30px]">
                 {navLinks.map((navLink, index) => (
