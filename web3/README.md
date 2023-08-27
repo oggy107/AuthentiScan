@@ -1,1 +1,0 @@
-# Contracts for AuthentiScan
