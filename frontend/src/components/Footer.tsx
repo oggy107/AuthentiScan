@@ -63,11 +63,16 @@ const Footer: FC = (): JSX.Element => {
                             />
                         </li>
                         <li>
-                            <img
-                                className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
-                                src={gh}
-                                alt="github"
-                            />
+                            <a
+                                href="https://github.com/oggy107/AuthentiScan"
+                                target="_blank"
+                            >
+                                <img
+                                    className="w-[30px] hover:scale-150 transition-all duration-300 ease-in-out cursor-pointer"
+                                    src={gh}
+                                    alt="github"
+                                />
+                            </a>
                         </li>
                     </ul>
                 </div>

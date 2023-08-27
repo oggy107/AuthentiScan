@@ -16,7 +16,6 @@ const Button: FC<ButtonProps> = ({
     type,
     disabled,
     onclick,
-    primary,
     secondary,
 }) => {
     return (
