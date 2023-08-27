@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import Input from "./Input";
 import Button from "./Button";
-import useRegisterManufacturer from "../hooks/useRegisterManufacturer";
+import registerManufacturer from "../hooks/registerManufacturer";
 import { RegistrationVMExceptions, WalletErrors } from "../errors";
 import { useStage } from "../context/StageContext";
 import { useUser } from "../context/UserContext";
@@ -19,8 +19,11 @@ const RegistrationForm: FC = () => {
     const [registrarId, setRegistrarId] = useState<string>("");
     const [taxId, setTaxId] = useState<string>("");
 
-    const { register, isEnabled, isLoading, isSuccess, isError, error } =
-        useRegisterManufacturer();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState<Error | undefined>(undefined);
+
     const { forceUpdate } = useUser();
 
     const stageContext = useStage();
@@ -38,7 +41,7 @@ const RegistrationForm: FC = () => {
         return true;
     };
 
-    const handleError = (error: Error | null) => {
+    const handleError = (error: Error | undefined) => {
         if (
             error?.message.includes(
                 RegistrationVMExceptions.ManufacturerAlreadyRegistered.Exception
@@ -59,14 +62,14 @@ const RegistrationForm: FC = () => {
 
     useEffect(() => {
         if (isLoading) {
-            toast.info("Please check wallet", { autoClose: false });
+            toast.info("Waiting for confirmation...", { autoClose: false });
         }
 
         if (isSuccess) {
             toast.dismiss();
+            forceUpdate();
             toast.success("Registered Successfully");
             setStage("welcome");
-            forceUpdate();
         }
 
         if (isError) {
@@ -75,7 +78,7 @@ const RegistrationForm: FC = () => {
         }
     }, [isLoading, isSuccess, isError]);
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!isConnected) {
@@ -88,16 +91,28 @@ const RegistrationForm: FC = () => {
             return;
         }
 
-        register(
-            companyName,
-            registrationNo,
-            logo,
-            address,
-            email,
-            registrar,
-            registrarId,
-            taxId
-        );
+        setIsLoading(true);
+
+        const { isSuccess: regisSuccess, error: regError } =
+            await registerManufacturer(
+                companyName,
+                registrationNo,
+                logo,
+                address,
+                email,
+                registrar,
+                registrarId,
+                taxId
+            );
+
+        if (regisSuccess) {
+            setIsSuccess(true);
+        } else {
+            setIsError(true);
+            setError(regError);
+        }
+
+        setIsLoading(false);
     };
 
     const handleChanges = (event: ChangeEvent<HTMLInputElement>) => {
@@ -214,7 +229,7 @@ const RegistrationForm: FC = () => {
                 className="mt-[50px]"
                 title="Register"
                 type="submit"
-                disabled={isLoading || !isEnabled}
+                disabled={isLoading}
             />
         </form>
     );

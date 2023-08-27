@@ -1,8 +1,16 @@
 // deploy contracts on local chain i.e http://127.0.0.1:8545 and change folowing addresses
 
+// local (form just me :>)
+// 9b1f7F645351AF3631a656421eD2e40f2802E6c0 : authentiscan
+// 4C65804f4b00a50e0750293973D7EAf32602587E : verify
+
+// sepolia
+// 61A6b6508C909DAA9A4B4f792A5C1ADb6C8D096c : authentiscan
+// 49C39c6AFe4E41777B2B80A06a5F882292398E92 : verify
+
 const config = {
     authentiscanContract: {
-        address: "6976de6Cca48f3b6c28f904d8bF8ABa1F2C750aE",
+        address: "61A6b6508C909DAA9A4B4f792A5C1ADb6C8D096c",
         abi: [
             {
                 inputs: [],
@@ -538,7 +546,7 @@ const config = {
     },
 
     verifyContract: {
-        address: "496B07e73eCFFfff1578206c0965C0280aA5cDE7",
+        address: "49C39c6AFe4E41777B2B80A06a5F882292398E92",
         abi: [
             {
                 inputs: [

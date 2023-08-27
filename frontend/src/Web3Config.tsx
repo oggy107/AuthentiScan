@@ -6,6 +6,7 @@ import {
 import { Web3Modal } from "@web3modal/react";
 import { FC, PropsWithChildren } from "react";
 import { configureChains, createConfig, WagmiConfig, Chain } from "wagmi";
+import { localhost } from "wagmi/chains";
 
 const AlchemySepolia = {
     id: 11155111,
@@ -32,7 +33,7 @@ const AlchemySepolia = {
     },
 } satisfies Chain;
 
-const chains = [AlchemySepolia];
+const chains = [AlchemySepolia, localhost];
 const projectId = import.meta.env.VITE_W3M_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);

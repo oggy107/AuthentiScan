@@ -130,7 +130,6 @@ const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
 
     const hanldeSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log(verifiedProduct);
 
         if (!selectedManufacturer) {
             toast.error("Please Select Manufacturer", { toastId: "error" });

@@ -111,7 +111,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, manufacturer }) => {
                     <div className="flex">
                         <div className="text-neutral-500 mr-[10px]">EXP:</div>
                         <div className="flex-grow text-black border-b border-zinc-300">
-                            {product.EXPDate}
+                            {product.EXPDate || "Nil"}
                         </div>
                     </div>
                 </div>
