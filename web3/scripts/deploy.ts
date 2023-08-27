@@ -1,7 +1,9 @@
 import { ethers } from "hardhat";
 
 async function main() {
-    const authentiScan = await ethers.deployContract("AuthentiScan");
+    let authentiScan = await ethers.deployContract("AuthentiScan");
+
+    authentiScan = await authentiScan.waitForDeployment();
 
     console.log(`AuthentiScan deployed to ${authentiScan.target}`);
     console.log(
