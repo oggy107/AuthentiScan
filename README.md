@@ -139,3 +139,7 @@ We know this is most needed feature so it is on top of our priority list. This w
 **UX improvements**
 
 Various UX improvements are on their way such as ability to search verified manfacturers when checking product authenticity instead of selecting manufacturer from a dropdown.
+
+**Make UI Mobile Friendly**
+
+We are looking forward to make our app responsive and accessible on mobile platforms. This is also in our top priorities.
