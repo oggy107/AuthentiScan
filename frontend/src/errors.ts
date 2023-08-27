@@ -15,13 +15,12 @@ interface RegistrationErrorsI {
 
 export const RegistrationVMExceptions: RegistrationErrorsI = {
     ManufacturerAlreadyRegistered: {
-        Exception:
-            "VM Exception while processing transaction: revert Manufacturer already registerd",
+        Exception: "Manufacturer already registerd",
         ExceptionMessage: "Manufacturer already registerd",
     },
     ManufacturerNotRegistered: {
         Exception:
-            "VM Exception while processing transaction: revert Manufacturer is not registered. Please register manufacturer first",
+            "Manufacturer is not registered. Please register manufacturer first",
         ExceptionMessage: "Manufacturer not registered",
     },
 };
@@ -43,8 +42,7 @@ interface ProductRegistrationErrorsI {
 
 export const ProductRegistrationErrors: ProductRegistrationErrorsI = {
     ProductAlreadyRegistered: {
-        Exception:
-            "VM Exception while processing transaction: revert Can not register multiple products with same id",
+        Exception: "Can not register multiple products with same id",
         ExceptionMessage: "Product already registered",
     },
 };
@@ -56,13 +54,11 @@ interface TrustedEntitiesErrorsI {
 
 export const TrustedEntitiesErrors: TrustedEntitiesErrorsI = {
     NotOwner: {
-        Exception:
-            "VM Exception while processing transaction: revert Ownable: caller is not the owner",
+        Exception: "Ownable: caller is not the owner",
         ExceptionMessage: "Only owner can perform this action",
     },
     AlreadyTrusted: {
-        Exception:
-            "VM Exception while processing transaction: revert This entity is already trusted",
+        Exception: "This entity is already trusted",
         ExceptionMessage: "This entity is already trusted",
     },
 };
@@ -74,13 +70,11 @@ interface AccessErrorsI {
 
 export const AccessErrors: AccessErrorsI = {
     NotVerified: {
-        Exception:
-            "VM Exception while processing transaction: revert Only verified Manufacturers can call this method",
+        Exception: "Only verified Manufacturers can call this method",
         ExceptionMessage: "You are not yet verified",
     },
     EntityNotTrusted: {
-        Exception:
-            "VM Exception while processing transaction: revert This enity is not trusted",
+        Exception: "This enity is not trusted",
         ExceptionMessage: "You are not a trusted entity",
     },
 };
@@ -91,8 +85,7 @@ interface ProductVerificationErrorsI {
 
 export const ProductVerificationErrors: ProductVerificationErrorsI = {
     ProductNotRegistered: {
-        Exception:
-            "VM Exception while processing transaction: revert Product is not register with by this manufacturer",
+        Exception: "Product is not register with by this manufacturer",
         ExceptionMessage: "Product is not registered",
     },
 };
@@ -105,13 +98,12 @@ interface VoteErrorsI {
 export const VoteErrors: VoteErrorsI = {
     AlreadyVerified: {
         Exception:
-            "VM Exception while processing transaction: revert This manufacturer is not in unverified pool. Hence you can not cast vote for it",
+            "This manufacturer is not in unverified pool. Hence you can not cast vote for it",
         ExceptionMessage:
             "This manufacturer is already verified. Try refreshing the page",
     },
     AlreadyCastedVote: {
-        Exception:
-            "VM Exception while processing transaction: revert This entity has already casted a vote",
+        Exception: "This entity has already casted a vote",
         ExceptionMessage:
             "You have already casted a vote for this manufacturer",
     },

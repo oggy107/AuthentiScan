@@ -187,7 +187,6 @@ const AddProductForm: FC<AddProductFormProps> = ({ isConnected }) => {
                     value={productEXPDate}
                     onChange={handleChanges}
                     type="date"
-                    required
                 />
             </div>
             <Button
