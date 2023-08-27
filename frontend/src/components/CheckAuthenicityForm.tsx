@@ -89,11 +89,13 @@ const DropDown: FC<DropDownProps> = ({
 interface CheckAuthenicityFormProps {
     verifiedProduct: Product | undefined;
     setVerifiedProduct: Dispatch<SetStateAction<Product | undefined>>;
+    setProductManufacturer: Dispatch<SetStateAction<Manufacturer | undefined>>;
 }
 
 const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
     verifiedProduct,
     setVerifiedProduct,
+    setProductManufacturer,
 }) => {
     const [selectedManufacturer, setSelectedManufacturer] =
         useState<Manufacturer>();
@@ -143,6 +145,7 @@ const CheckAuthenicityForm: FC<CheckAuthenicityFormProps> = ({
         if (isSuccess) {
             toast.success("Product is authentic", { toastId: "success" });
             setVerifiedProduct(product);
+            setProductManufacturer(selectedManufacturer);
         } else {
             handleErrors(error);
             setVerifiedProduct(undefined);

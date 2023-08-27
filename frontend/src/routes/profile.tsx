@@ -9,6 +9,7 @@ import duck from "../assets/animation_duck.gif";
 import { useUser } from "../context/UserContext";
 import { Manufacturer } from "../types";
 import { Route } from "../types";
+import { epochToDate } from "../utils";
 
 const VerifiedMessage: FC = () => {
     const navigate = useNavigate();
@@ -114,7 +115,7 @@ const ManufacturerDetails: FC<ManufacturerDetailsProps> = ({
                         <div className="text-lg font-medium">
                             Registration date:
                         </div>
-                        <div>{String(manufacturer.regTime)}</div>
+                        <div>{epochToDate(Number(manufacturer.regTime))}</div>
                     </div>
                 </div>
             </div>

@@ -3,12 +3,7 @@ import { toast } from "react-toastify";
 
 import useGetUnverifiedManufacturers from "../hooks/useGetUnverifiedManufacturers";
 import useVote from "../hooks/useVote";
-import {
-    AccessErrors,
-    WalletErrors,
-    TrustedEntitiesErrors,
-    VoteErrors,
-} from "../errors";
+import { AccessErrors, WalletErrors, VoteErrors } from "../errors";
 import Button from "../components/Button";
 
 const Vote: FC = () => {
