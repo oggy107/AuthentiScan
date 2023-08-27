@@ -17,10 +17,10 @@ const RegisterStageContextWrapper: FC = () => {
     const { manufacturer } = useUser();
 
     useEffect(() => {
-        if (manufacturer) {
+        if (manufacturer && stage != "welcome") {
             navigate(Route.PROFILE);
         }
-    }, [manufacturer]);
+    }, [manufacturer, stage]);
 
     return (
         <div className="flex flex-grow  mt-[70px] mb-[155px]">

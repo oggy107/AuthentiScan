@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useAccount } from "wagmi";
 
-import useGetManufacturer from "../hooks/useGetManufacturer";
+import getManufacturer from "../hooks/getManufacturer";
 import { Manufacturer } from "../types";
 
 interface Profile {
@@ -19,6 +19,7 @@ interface Profile {
 interface UserContextI {
     manufacturer: Manufacturer | undefined;
     setManufacturer: (manufacturer: Manufacturer) => void;
+    forceUpdate: () => void;
     profile: Profile | null;
     setProfile: (profile: Profile | null) => void;
 }
@@ -26,6 +27,7 @@ interface UserContextI {
 const UserContextDefault: UserContextI = {
     manufacturer: undefined,
     setManufacturer: () => {},
+    forceUpdate: () => {},
     profile: null,
     setProfile: () => {},
 };
@@ -36,30 +38,46 @@ const UserContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const [manufacturer, setManufacturer] = useState<Manufacturer | undefined>(
         undefined
     );
+
+    const [update, setUpdate] = useState(0);
+    const forceUpdate = () => {
+        setUpdate((prev) => prev + 1);
+    };
+
     const [profile, setProfile] = useState<Profile | null>(null);
 
     const { address } = useAccount();
-    const data = useGetManufacturer(address ? address : "0x");
 
     useEffect(() => {
-        if (data.isSuccess) {
-            setManufacturer(data.manufacturer);
-
-            if (data.manufacturer) {
-                setProfile({
-                    logo: data.manufacturer.logo,
-                    name: data.manufacturer.name,
-                });
-            }
-        } else {
-            setManufacturer(undefined);
-            setProfile(null);
+        if (address) {
+            getManufacturer(address).then(({ manufacturer, isError }) => {
+                if (!isError) {
+                    setManufacturer(manufacturer);
+                    if (manufacturer) {
+                        setProfile({
+                            logo: manufacturer.logo,
+                            name: manufacturer.name,
+                        });
+                    } else {
+                        setProfile(null);
+                    }
+                } else {
+                    setManufacturer(undefined);
+                    setProfile(null);
+                }
+            });
         }
-    }, [data.isSuccess]);
+    }, [address, update]);
 
     return (
         <UserContext.Provider
-            value={{ manufacturer, setManufacturer, profile, setProfile }}
+            value={{
+                manufacturer,
+                setManufacturer,
+                forceUpdate,
+                profile,
+                setProfile,
+            }}
         >
             {children}
         </UserContext.Provider>

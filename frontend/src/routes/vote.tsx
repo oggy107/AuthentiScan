@@ -3,7 +3,12 @@ import { toast } from "react-toastify";
 
 import useGetUnverifiedManufacturers from "../hooks/useGetUnverifiedManufacturers";
 import useVote from "../hooks/useVote";
-import { AccessErrors, WalletErrors } from "../errors";
+import {
+    AccessErrors,
+    WalletErrors,
+    TrustedEntitiesErrors,
+    VoteErrors,
+} from "../errors";
 import Button from "../components/Button";
 
 const Vote: FC = () => {
@@ -26,6 +31,14 @@ const Vote: FC = () => {
         ) {
             toast.error(AccessErrors.EntityNotTrusted.ExceptionMessage);
         } else if (
+            error?.message.includes(VoteErrors.AlreadyVerified.Exception)
+        ) {
+            toast.error(VoteErrors.AlreadyVerified.ExceptionMessage);
+        } else if (
+            error?.message.includes(VoteErrors.AlreadyCastedVote.Exception)
+        ) {
+            toast.error(VoteErrors.AlreadyCastedVote.ExceptionMessage);
+        } else if (
             error?.message.includes(WalletErrors.WalletUserRejected.Error)
         ) {
             toast.error(WalletErrors.WalletUserRejected.ErrorMessage);
@@ -36,6 +49,7 @@ const Vote: FC = () => {
 
     useEffect(() => {
         toast.dismiss();
+
         if (isError) {
             handleErrors(error);
         }
@@ -48,7 +62,7 @@ const Vote: FC = () => {
         if (voteIsSuccess) {
             toast.success("Vote Casted Successfully");
         }
-    }, [isError, voteIsError]);
+    }, [isError, voteIsError, voteIsLoading, voteIsSuccess]);
 
     const handleClick = (id: string) => {
         castVote(id as `0x${string}`);
@@ -110,7 +124,7 @@ const Vote: FC = () => {
                                         </div>
                                         <Button
                                             title="vote"
-                                            className="h-[30px] py-0 px-[40px]"
+                                            className="h-[30px] py-1 px-[40px] font-semibold"
                                             secondary
                                             onclick={() => {
                                                 handleClick(
@@ -128,7 +142,6 @@ const Vote: FC = () => {
                                 <div className="text-5xl">
                                     You Are Not A Trusted Entity
                                 </div>
-                                {/* <img src={duck} alt="duck" /> */}
                             </div>
                         )
                     )}

@@ -96,3 +96,23 @@ export const ProductVerificationErrors: ProductVerificationErrorsI = {
         ExceptionMessage: "Product is not registered",
     },
 };
+
+interface VoteErrorsI {
+    AlreadyVerified: VMExeption;
+    AlreadyCastedVote: VMExeption;
+}
+
+export const VoteErrors: VoteErrorsI = {
+    AlreadyVerified: {
+        Exception:
+            "VM Exception while processing transaction: revert This manufacturer is not in unverified pool. Hence you can not cast vote for it",
+        ExceptionMessage:
+            "This manufacturer is already verified. Try refreshing the page",
+    },
+    AlreadyCastedVote: {
+        Exception:
+            "VM Exception while processing transaction: revert This entity has already casted a vote",
+        ExceptionMessage:
+            "You have already casted a vote for this manufacturer",
+    },
+};

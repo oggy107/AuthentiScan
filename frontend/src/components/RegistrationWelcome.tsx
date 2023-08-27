@@ -1,10 +1,14 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "./Button";
 import partyPopperR from "../assets/icons/partyPopper-r.svg";
 import partyPopperL from "../assets/icons/partyPopper-l.svg";
+import { Route } from "../types";
 
 const RegistrationWelcome: FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="w-full h-full flex px-[100px] py-10">
             <div className="flex flex-grow justify-center items-center border-2 border-dashed border-blue-900 relative">
@@ -18,7 +22,7 @@ const RegistrationWelcome: FC = () => {
                     </div>
                     <Button
                         title="Go to Dashboard"
-                        onclick={() => location.reload()}
+                        onclick={() => navigate(Route.PROFILE)}
                     />
                     <br />
                 </div>
