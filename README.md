@@ -132,6 +132,10 @@ Currently the verification for manufacturer is done by number of trusted entites
 
 Pagination will soon become neccessary as our platform grows to ensure high responsiveness and most improtantly not reject the transactions due to large datasets. This can be implimented using simple offset(cursor) method in smart contract methods.
 
+**Abilitiy for manufacturers to add products in bulk**
+
+We know this is most needed feature so it is on top of our priority list. This will allow manufacturers to add products in bulk by submiting products through file such csv.
+
 **UX improvements**
 
 Various UX improvements are on their way such as ability to search verified manfacturers when checking product authenticity instead of selecting manufacturer from a dropdown.
