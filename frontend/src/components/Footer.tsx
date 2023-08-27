@@ -18,25 +18,25 @@ const Footer: FC = (): JSX.Element => {
                         <img src={logoFull} alt="logo" />
                     </div>
                     <ul className="flex items-center gap-[30px]">
-                        <li className="text-white text-sm font-normal capitalize">
+                        <li className="text-white font-semibold transition-all duration-500 hover:text-green-300 hover:translate-y-[-4px]">
                             <Link to={Route.HOME}>Home</Link>
                         </li>
-                        <li className="text-white text-sm font-normal capitalize">
+                        <li className="text-white font-semibold transition-all duration-500 hover:text-green-300 hover:translate-y-[-4px]">
                             <NavHashLink to={Route.ABOUT} smooth>
                                 AboutUs
                             </NavHashLink>
                         </li>
-                        <li className="text-white text-sm font-normal capitalize">
+                        <li className="text-white font-semibold transition-all duration-500 hover:text-green-300 hover:translate-y-[-4px]">
                             <NavHashLink to={Route.HOW_IT_WORKS} smooth>
                                 How it works
                             </NavHashLink>
                         </li>
-                        <li className="text-white text-sm font-normal capitalize">
+                        <li className="text-white font-semibold transition-all duration-500 hover:text-green-300 hover:translate-y-[-4px]">
                             <Link to={Route.CHECK_AUTHENTICITY}>
                                 Check Authenticity
                             </Link>
                         </li>
-                        <li className="text-white text-sm font-normal capitalize">
+                        <li className="text-white font-semibold transition-all duration-500 hover:text-green-300 hover:translate-y-[-4px]">
                             <Link to={Route.VOTE}>Trusted Entity</Link>
                         </li>
                     </ul>

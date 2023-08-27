@@ -63,7 +63,7 @@ const Header: FC = (): JSX.Element => {
             <ul className="flex items-center gap-[30px]">
                 {navLinks.map((navLink, index) => (
                     <li
-                        className="text-white text-sm font-normal capitalize"
+                        className="text-white font-semibold transition-all duration-500 hover:text-black hover:translate-y-[-3px]"
                         key={index}
                     >
                         {navLink.hashRouter ? (
@@ -85,7 +85,9 @@ const Header: FC = (): JSX.Element => {
                         <div className="w-[30px] h-[30px] flex items-center">
                             <img src={profile.logo} alt={profile.name} />
                         </div>
-                        <div className="text-white">{profile.name}</div>
+                        <div className="text-white font-semibold transition-all duration-500 hover:text-black">
+                            {profile.name}
+                        </div>
                     </div>
                 )}
                 <Web3Button />
