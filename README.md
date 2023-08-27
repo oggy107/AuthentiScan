@@ -2,7 +2,7 @@
 
 
 <p align="center">
-  <img src="frontend/src/assets/logo_readme.png" width="550px">
+  <img src="https://github.com/oggy107/AuthentiScan/blob/master/frontend/src/assets/logo.svg" width="550px">
 </p>
 
 <h4 align="center">A fake product verification system</h4>
