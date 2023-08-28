@@ -8,10 +8,11 @@
 
 <h4 align="center">A fake product verification system</h4>
 
-# Table of Contents
+## Table of Contents
 - [Table of Contents](#table-of-contents)
   - [About](#about)
   - [Why](#why)
+  - [Testing Phase](#testing-phase)
   - [How it works?](#how-it-works)
   - [Technologies Used](#technologies-used)
   - [Running Locally](#running-locally)
@@ -26,6 +27,13 @@
 ## Why
 
 The absence of a blockchain-based fake product authentication system poses critical challenges to modern commerce. Without such a system, counterfeit products can proliferate unchecked, leading to financial losses for both consumers and brands. The lack of transparency and traceability in traditional supply chains allows fraudulent transactions to flourish, eroding consumer trust and damaging brand reputation. Additionally, the opacity of information along supply chains hinders effective accountability and responsiveness to issues such as recalls or quality concerns. The absence of tamper-resistant records leaves room for data manipulation and unauthorized alterations, leading to inaccurate product information and an inability to verify authenticity. Inefficient and time-consuming manual authentication processes further exacerbate the problem, causing delays, increased costs, and consumer skepticism. Overall, the absence of a blockchain-based authentication system magnifies the risks of counterfeit products, undermines transparency, and compromises the trust that underpins modern commerce.
+
+## Testing Phase
+
+***Note:*** *The app is currently in testing stage and has been deployed to **sepolia** an ethereum testnet. A test manufacturer named **Apple** has been registered and verified in test version of yhe app. A product also has been added by Apple with product id ***airpod123* which can be checked for authenicity.*
+
+Manufacturer registered for testing: Apple
+Product id: airpod123
 
 ## How it works?
 
