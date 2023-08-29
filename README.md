@@ -30,6 +30,7 @@
   - [Abilitiy for manufacturers to add products in bulk](#abilitiy-for-manufacturers-to-add-products-in-bulk)
   - [UX improvements](#ux-improvements)
   - [Make UI Mobile Friendly](#make-ui-mobile-friendly)
+- [Contributions](#contributions)
 
 ## About
 
@@ -171,3 +172,7 @@ Various UX improvements are on their way such as ability to search verified manf
 ### Make UI Mobile Friendly
 
 We are looking forward to make our app responsive and accessible on mobile platforms. This is also in our top priorities.
+
+## Contributions
+
+Contibutions are most welcomed 🙂. Feel free to fork the repository.
